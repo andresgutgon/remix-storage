@@ -14,10 +14,9 @@
   },
   "variants": [],
   "projects": [
-    // {
-    //   "packageName": "my-toolchain",
-    //   "projectFolder": "tools/my-toolchain",
-    //   "reviewCategory": "tools"
-    // }
+    {
+      "packageName": "@remix-storage/core",
+      "projectFolder": "packages/core"
+    }
   ]
 }

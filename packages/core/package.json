@@ -1,0 +1,16 @@
+{
+  "name": "@remix-storage/core",
+  "version": "0.1.0",
+  "description": "File storage solution for Remix with Prisma as ORM. Handle multiple file storage providers like Disk or S3",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf ./lib/ && tsc"
+  },
+  "author": "Andrés Gutiérrez",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^10.9.4",
+    "rimraf": "^2.6.2",
+    "typescript": "^3.0.3"
+  }
+}
