@@ -1,0 +1,27 @@
+{
+  "name": "remix-storage",
+  "version": "0.1.0",
+  "description": "File storage solution for Remix with Prisma as ORM. Handle multiple file storage providers like Disk or S3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andresgutgon/remix-storage.git"
+  },
+  "keywords": [
+    "remix",
+    "prisma",
+    "typescript",
+    "s3",
+    "storage",
+    "attachments"
+  ],
+  "author": "Andrés Gutiérrez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andresgutgon/remix-storage/issues"
+  },
+  "homepage": "https://github.com/andresgutgon/remix-storage#readme"
+}
