@@ -1,0 +1,10 @@
+[
+  {
+    "definitionName": "lockStepVersion",
+    "policyName": "AllInOne",
+    "version": "0.1.0",
+    "nextBump": "prerelease",
+    "mainProject": "core",
+    "includeEmailInChangeFile": false
+  }
+]

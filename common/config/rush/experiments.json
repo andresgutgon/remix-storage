@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/experiments.schema.json",
+  "usePnpmFrozenLockfileForRushInstall": true,
+  "usePnpmPreferFrozenLockfileForRushUpdate": false,
+  "omitImportersFromPreventManualShrinkwrapChanges": false,
+  "noChmodFieldInTarHeaderNormalization": false,
+  "buildCacheWithAllowWarningsInSuccessfulBuild": false
+}
