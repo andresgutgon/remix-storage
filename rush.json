@@ -3,20 +3,29 @@
   "rushVersion": "5.62.4",
   "pnpmVersion": "6.7.1",
   "pnpmOptions": {
-    "useWorkspaces": true
+    "useWorkspaces": true,
+    "strictPeerDependencies": true
   },
   "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0 || >=16.13.0 <17.0.0",
+  "ensureConsistentVersions": true,
   "eventHooks": {
     "preRushInstall": [],
     "postRushInstall": [],
     "preRushBuild": [],
     "postRushBuild": []
   },
+  "repository": {
+    "url": "https://github.com/andresgutgon/remix-storage"
+  },
   "variants": [],
   "projects": [
     {
       "packageName": "@remix-storage/core",
       "projectFolder": "packages/core"
+    },
+    {
+      "packageName": "@remix-storage/filesystem",
+      "projectFolder": "packages/filesystem"
     }
   ]
 }

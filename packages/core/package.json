@@ -2,15 +2,22 @@
   "name": "@remix-storage/core",
   "version": "0.1.0",
   "description": "File storage solution for Remix with Prisma as ORM. Handle multiple file storage providers like Disk or S3",
-  "main": "index.js",
-  "scripts": {
-    "build": "rimraf ./lib/ && tsc"
-  },
   "author": "Andrés Gutiérrez",
   "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "heft test --clean",
+    "start": "node dist/index.js"
+  },
   "devDependencies": {
-    "@types/node": "^10.9.4",
+    "@rushstack/eslint-config": "^2.5.1",
+    "@rushstack/heft": "0.44.2",
+    "@rushstack/heft-jest-plugin": "^0.2.3",
+    "@rushstack/heft-node-rig": "1.8.0",
+    "@types/heft-jest": "1.0.2",
+    "@types/node": "16.11.7",
+    "eslint": "^8.9.0",
     "rimraf": "^2.6.2",
-    "typescript": "^3.0.3"
+    "typescript": "^4.5.5"
   }
 }
