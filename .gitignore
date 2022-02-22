@@ -3,6 +3,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.error.log
+*.build.log
 
 # Runtime data
 *.pid

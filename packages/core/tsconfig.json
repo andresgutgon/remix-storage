@@ -4,9 +4,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDirs": ["src/"],
+    "declaration": true,
 
     "forceConsistentCasingInFileNames": true,
-    "declaration": true,
     "sourceMap": true,
     "declarationMap": true,
     "inlineSources": true,

@@ -1,7 +1,4 @@
-export { Driver } from "./interfaces/Driver/index"
+export type { Driver } from "./interfaces/Driver/index"
 
-export const hello = () => {
-  console.log("HOLA")
-}
+export const hello = (): string => "A COMER YA?"
 
-hello()

@@ -6,8 +6,10 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "build": "heft test --clean",
-    "start": "node dist/index.js"
+    "build:types": "tsc --emitDeclarationOnly --declaration --project tsconfig.json",
+    "build:types:watch": "tsc-watch --emitDeclarationOnly --declaration --project tsconfig",
+    "build:common": "esbuild ./src/index.ts --outfile=dist --platform=node --format=cjs",
+    "build:watch": "pnpm run build:common -- --sourcemap --watch"
   },
   "devDependencies": {
     "@rushstack/eslint-config": "^2.5.1",
@@ -17,7 +19,7 @@
     "@types/heft-jest": "1.0.2",
     "@types/node": "16.11.7",
     "eslint": "^8.9.0",
-    "rimraf": "^2.6.2",
+    "tsup": "^5.11.13",
     "typescript": "^4.5.5"
   }
 }

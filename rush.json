@@ -20,12 +20,19 @@
   "variants": [],
   "projects": [
     {
+      "packageName": "@examples/basic",
+      "projectFolder": "examples/basic",
+      "reviewCategory": "examples"
+    },
+    {
       "packageName": "@remix-storage/core",
-      "projectFolder": "packages/core"
+      "projectFolder": "packages/core",
+      "reviewCategory": "packages"
     },
     {
       "packageName": "@remix-storage/filesystem",
-      "projectFolder": "packages/filesystem"
+      "projectFolder": "packages/filesystem",
+      "reviewCategory": "packages"
     }
   ]
 }
