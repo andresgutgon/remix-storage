@@ -6,10 +6,9 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "build:types": "tsc --emitDeclarationOnly --declaration --project tsconfig.json",
-    "build:types:watch": "tsc-watch --emitDeclarationOnly --declaration --project tsconfig",
-    "build:common": "esbuild ./src/index.ts --outfile=dist --platform=node --format=cjs",
-    "build:watch": "pnpm run build:common -- --sourcemap --watch"
+    "build:common_OLD": "esbuild ./src/index.ts --outfile=dist --platform=node --format=cjs",
+    "build:common": "tsup ./src/index.ts --dts --format cjs",
+    "build:watch": "pnpm run build:common -- --watch"
   },
   "devDependencies": {
     "@rushstack/eslint-config": "^2.5.1",
