@@ -1,9 +1,5 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/common-versions.schema.json",
-  "preferredVersions": {
-    "typescript": "^4.5.5",
-    "@types/node": "16.11.7",
-    "esbuild": "^0.14.23"
-  },
+  "preferredVersions": {},
   "allowedAlternativeVersions": {}
 }

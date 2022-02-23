@@ -20,11 +20,6 @@
   "variants": [],
   "projects": [
     {
-      "packageName": "@examples/basic",
-      "projectFolder": "examples/basic",
-      "reviewCategory": "examples"
-    },
-    {
       "packageName": "@remix-storage/core",
       "projectFolder": "packages/core",
       "reviewCategory": "packages"
@@ -33,6 +28,16 @@
       "packageName": "@remix-storage/filesystem",
       "projectFolder": "packages/filesystem",
       "reviewCategory": "packages"
+    },
+    {
+      "packageName": "@examples/basic",
+      "projectFolder": "examples/basic",
+      "reviewCategory": "examples"
+    },
+    {
+      "packageName": "@tools/eslint-config",
+      "projectFolder": "tools/eslint-config",
+      "reviewCategory": "tools"
     }
   ]
 }
