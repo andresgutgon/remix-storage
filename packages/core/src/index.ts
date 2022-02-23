@@ -1,6 +1,5 @@
-export type { Driver } from "./interfaces/Driver/index"
+export type {Driver} from "./interfaces/Driver/index"
 
-export const hello = (): string => {
+export const hello = (_hola) => {
   return "FOO"
 }
-

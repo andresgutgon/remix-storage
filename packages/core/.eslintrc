@@ -1,10 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "react"
-  ],
+  "plugins": ["@typescript-eslint", "react"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -18,11 +15,7 @@
   },
   "rules": {
     "no-console": 1,
-    "quotes": ["error", "double", { "allowTemplateLiterals": true }],
-    "semi": [
-      "error",
-      "never",
-      { "beforeStatementContinuationChars": "always"}
-    ]
+    "quotes": ["error", "double", {"allowTemplateLiterals": true}],
+    "semi": ["error", "never", {"beforeStatementContinuationChars": "always"}]
   }
 }

@@ -9,6 +9,14 @@
       "incremental": true,
       "enableParallelism": true,
       "watchForChanges": true
+    },
+    {
+      "name": "prettier",
+      "commandKind": "global",
+      "summary": "Used by the pre-commit Git hook.",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "rush-prettier",
+      "shellCommand": "pretty-quick --staged"
     }
   ],
   "parameters": []
