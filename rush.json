@@ -15,7 +15,8 @@
     "postRushBuild": []
   },
   "repository": {
-    "url": "https://github.com/andresgutgon/remix-storage"
+    "url": "https://github.com/andresgutgon/remix-storage",
+    "defaultBranch": "main"
   },
   "variants": [],
   "projects": [
