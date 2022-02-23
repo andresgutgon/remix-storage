@@ -1,18 +1,10 @@
 import { LoaderFunction, useLoaderData  } from "remix"
-import { Driver, hello } from "@remix-storage/core"
-
-class LOL implements Driver {
-  public hello(): string {
-    return "HOLs"
-  }
-}
-
-console.log(LOL)
+import { hello } from "@remix-storage/core"
 
 export const loader: LoaderFunction = async () => {
   const helloResult = hello()
 
-  console.log("RESULT LOL", helloResult)
+  console.log("HELLO 3", helloResult)
 
   return { helloResult }
 }

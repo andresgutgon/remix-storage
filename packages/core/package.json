@@ -6,18 +6,11 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "build:common_OLD": "esbuild ./src/index.ts --outfile=dist --platform=node --format=cjs",
     "build:common": "tsup ./src/index.ts --dts --format cjs",
     "build:watch": "pnpm run build:common -- --watch"
   },
   "devDependencies": {
-    "@rushstack/eslint-config": "^2.5.1",
-    "@rushstack/heft": "0.44.2",
-    "@rushstack/heft-jest-plugin": "^0.2.3",
-    "@rushstack/heft-node-rig": "1.8.0",
-    "@types/heft-jest": "1.0.2",
     "@types/node": "16.11.7",
-    "eslint": "^8.9.0",
     "tsup": "^5.11.13",
     "typescript": "^4.5.5"
   }
