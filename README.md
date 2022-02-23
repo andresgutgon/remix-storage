@@ -1,9 +1,16 @@
+# WHAT's This?
+TBD...
+
 ## TODO
 - [x] Setup examples folder for remix projects to develop the lib
-- [ ] Make esbuild and TS watchers work together. Try [tsup](https://tsup.egoist.sh)
+- [x] Make esbuild and TS watchers work together. Try [tsup](https://tsup.egoist.sh)
+- [ ] Setup ESLint + Prettier in `@remix-storage/core`
 - [ ] Develop the first feature
-- [ ] Understad how release / publish proccess works
+- [ ] Understand how release / publish proccess works
 - [ ] Define all I want to do in this project
+
+## ROADMAP
+TBD...
 
 ## Development
 Install dependencies.
