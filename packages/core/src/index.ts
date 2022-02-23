@@ -1,5 +1,5 @@
 export type {Driver} from "./interfaces/Driver/index"
 
-export const hello = (_hola) => {
+export const hello = () => {
   return "FOO"
 }

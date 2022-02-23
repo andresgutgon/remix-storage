@@ -4,7 +4,7 @@ TBD...
 ## TODO
 - [x] Setup examples folder for remix projects to develop the lib
 - [x] Make esbuild and TS watchers work together. Try [tsup](https://tsup.egoist.sh)
-- [ ] Setup ESLint + Prettier in `@remix-storage/core`
+- [x] Setup ESLint + Prettier in `@remix-storage/core`
 - [ ] Develop the first feature
 - [ ] Build production package with Rollup + esbuild
 - [ ] Understand how release / publish proccess works
