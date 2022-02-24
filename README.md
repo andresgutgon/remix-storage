@@ -43,3 +43,5 @@ the `./examples` Remix apps I do 3 things:
 
 So every Remix app that we want to actively listen to changes in `./packages/**/*.{js,dt.ts}` we have to setup PM2 with a Nodemon watcher.
 
+## References
+- This article and repo are interesting. I copied from there []the linter](https://bereghici.dev/blog/build-a-scalable-front-end-with-rush-monorepo-and-react--eslint+lint-staged)

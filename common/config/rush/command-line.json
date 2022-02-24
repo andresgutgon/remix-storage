@@ -10,6 +10,14 @@
       "shellCommand": "pretty-quick --staged"
     },
     {
+      "name": "commitlint",
+      "commandKind": "global",
+      "summary": "Used by the commit-msg Git hook. This command invokes commitlint to validate commit message.",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "rush-commitlint",
+      "shellCommand": "commitlint --edit ''"
+    },
+    {
       "name": "build:watch",
       "commandKind": "bulk",
       "summary": "Run build:watch on each package",
