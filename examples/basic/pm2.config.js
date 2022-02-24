@@ -3,14 +3,7 @@ module.exports = {
     {
       name: "Express App",
       script: "server.js",
-      watch: [
-        "remix.config.js",
-        "app",
-        // TODO: Test this:
-        // https://github.com/remix-run/remix/discussions/2074#discussioncomment-2237102
-        // "node_modules/@remix-storage"
-      ],
-      watch: [],
+      watch: ["remix.config.js", "app"],
       watch_options: {
         followSymlinks: false,
       },
