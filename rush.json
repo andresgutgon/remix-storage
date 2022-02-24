@@ -31,14 +31,19 @@
       "reviewCategory": "packages"
     },
     {
-      "packageName": "@examples/basic",
-      "projectFolder": "examples/basic",
-      "reviewCategory": "examples"
-    },
-    {
       "packageName": "@tools/eslint-config",
       "projectFolder": "tools/eslint-config",
       "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@tools/shared-scripts",
+      "projectFolder": "tools/shared-scripts",
+      "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@examples/basic",
+      "projectFolder": "examples/basic",
+      "reviewCategory": "examples"
     }
   ]
 }

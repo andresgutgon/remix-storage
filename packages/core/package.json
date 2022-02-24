@@ -6,10 +6,15 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "lint": "eslint ./src --ext .ts",
-    "lint:fix": "pnpm run lint -- --fix",
+    "lint": "shared-scripts lint src/**/*.{ts,tsx}",
     "build": "tsup ./src/index.ts --dts --format cjs",
     "build:watch": "pnpm run build -- --watch"
+  },
+  "dependencies": {
+    "@tools/shared-scripts": "workspace:*",
+    "@tools/eslint-config": "workspace:*",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@types/node": "16.11.7",

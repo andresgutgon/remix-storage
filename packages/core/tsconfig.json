@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDirs": ["src/"],
+    "rootDirs": ["./src/"],
     "declaration": true,
 
     "forceConsistentCasingInFileNames": true,
@@ -19,6 +19,6 @@
     "lib": ["es2017", "dom"],
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*.ts?(x)"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

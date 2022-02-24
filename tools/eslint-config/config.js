@@ -6,14 +6,11 @@ const tsConfig = fs.existsSync("tsconfig.json")
   : undefined
 
 module.exports = {
-  parser: "@babel/eslint-parser",
   parserOptions: {
     requireConfigFile: false,
-    ecmaVersion: 2021,
-    sourceType: "module",
-    ecmaFeatures: {
-      jsx: true,
-    },
+    ecmaVersion: 2017,
+    sourceType: "commonjs",
+    ecmaFeatures: {jsx: true},
   },
   env: {
     es6: true,
@@ -28,15 +25,13 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["**/*.ts?(x)"],
+      files: ["src"],
       parser: "@typescript-eslint/parser",
       parserOptions: {
-        ecmaVersion: 2021,
         sourceType: "commonjs",
+        ecmaVersion: 2017,
         project: tsConfig,
-        ecmaFeatures: {
-          jsx: true,
-        },
+        ecmaFeatures: {jsx: true},
         warnOnUnsupportedTypeScriptVersion: true,
       },
     },
