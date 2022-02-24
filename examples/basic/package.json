@@ -7,7 +7,8 @@
   "sideEffects": false,
   "scripts": {
     "postinstall": "remix setup node",
-    "dev": "pm2-dev ./pm2.config.js"
+    "dev": "pm2-dev ./pm2.config.js",
+    "build": ""
   },
   "dependencies": {
     "@remix-storage/core": "workspace:*",

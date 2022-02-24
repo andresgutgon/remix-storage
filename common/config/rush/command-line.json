@@ -2,9 +2,17 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
   "commands": [
     {
+      "name": "prettier",
+      "commandKind": "global",
+      "summary": "Used by the pre-commit Git hook.",
+      "safeForSimultaneousRushProcesses": true,
+      "autoinstallerName": "rush-prettier",
+      "shellCommand": "pretty-quick --staged"
+    },
+    {
       "name": "build:watch",
       "commandKind": "bulk",
-      "summary": "Build projects and watch for changes",
+      "summary": "Run build:watch on each package",
       "description": "+info: https://rushjs.io/pages/advanced/watch_mode",
       "incremental": true,
       "enableParallelism": true,
@@ -19,14 +27,6 @@
       "ignoreMissingScript": true,
       "ignoreDependencyOrder": true,
       "allowWarningsInSuccessfulBuild": false
-    },
-    {
-      "name": "prettier",
-      "commandKind": "global",
-      "summary": "Used by the pre-commit Git hook.",
-      "safeForSimultaneousRushProcesses": true,
-      "autoinstallerName": "rush-prettier",
-      "shellCommand": "pretty-quick --staged"
     }
   ],
   "parameters": []

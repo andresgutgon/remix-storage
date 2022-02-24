@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "Filesystem driver of remix-storage",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": ""
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andresgutgon/remix-storage.git"
