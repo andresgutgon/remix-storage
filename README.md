@@ -45,3 +45,4 @@ So every Remix app that we want to actively listen to changes in `./packages/**/
 
 ## References
 - This article and repo are interesting. I copied from there []the linter](https://bereghici.dev/blog/build-a-scalable-front-end-with-rush-monorepo-and-react--eslint+lint-staged)
+- Commit format reference [conventionalcommits.org](https://www.conventionalcommits.org/en/v1.0.0/)
