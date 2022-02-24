@@ -18,11 +18,12 @@
       "shellCommand": "commitlint --edit ''"
     },
     {
-      "name": "build:watch",
+      "name": "watch",
       "commandKind": "bulk",
       "summary": "Run build:watch on each package",
       "description": "+info: https://rushjs.io/pages/advanced/watch_mode",
       "incremental": true,
+      "ignoreMissingScript": true,
       "enableParallelism": true,
       "watchForChanges": true
     },

@@ -53,7 +53,6 @@ importers:
       '@types/node': 16.11.7
       react: ^17.0.2
       react-dom: ^17.0.2
-      tsup: ^5.11.13
       typescript: ^4.3.5
     dependencies:
       '@tools/eslint-config': link:../../tools/eslint-config
@@ -62,7 +61,6 @@ importers:
       react-dom: 17.0.2_react@17.0.2
     devDependencies:
       '@types/node': 16.11.7
-      tsup: 5.11.13_typescript@4.5.5
       typescript: 4.5.5
 
   ../../packages/filesystem:
@@ -136,6 +134,7 @@ importers:
       read-pkg-up: 7.0.1
       resolve: ^1.20.0
       semver: ^7.3.5
+      tsup: ^5.11.13
       typescript: ^4.3.5
       which: ~2.0.2
       yargs-parser: ~20.2.7
@@ -160,6 +159,7 @@ importers:
       cross-spawn: 7.0.3
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      tsup: 5.11.13_typescript@4.5.5
       typescript: 4.5.5
 
 packages:

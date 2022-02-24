@@ -8,15 +8,16 @@ const args = process.argv.slice(2)
 const scriptIndex = args.findIndex(
   (x) =>
     x === "build" ||
-    x === "start" ||
+    x === "example_dev" ||
+    x === "watch" ||
     x === "lint" ||
-    x === "lint-staged" ||
     x === "test"
 )
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex]
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : []
 
-if (["build", "start", "lint", "lint-staged", "test"].includes(script)) {
+const scripts = ["build", "example_dev", "watch", "lint", "test"]
+if (scripts.includes(script)) {
   const result = spawn.sync(
     process.execPath,
     nodeArgs
