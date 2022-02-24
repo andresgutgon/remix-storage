@@ -1,20 +1,47 @@
-import { LoaderFunction, useLoaderData  } from "remix"
-import { hello } from "@remix-storage/core"
+import {
+  Form,
+  unstable_parseMultipartFormData,
+  ActionFunction
+} from "remix"
+import { Driver, fileParser } from "@remix-storage/core"
 
-export const loader: LoaderFunction = async () => {
-  const helloResult = hello()
+class Foo implements Driver {
+  hello(): string {
+    return "HOLA"
+  }
+}
 
-  console.log("HELLO 3", helloResult)
+console.log("HOLA", Foo)
 
-  return { helloResult }
+export const action: ActionFunction = async ({ request }) => {
+  console.log("REQUEST", request)
+
+  const form = await unstable_parseMultipartFormData(
+    request,
+    fileParser
+  )
+  const file = form.get("myFile")
+  console.log("MyFile SIZE", (file as File)?.size)
+  console.log("MyFile TYPE", (file as File)?.type)
+  return {}
 }
 
 export default function Index() {
-  const data = useLoaderData()
   return (
     <div>
-      <h1>Welcome to Remix</h1>
-      <p>{data.helloResult}</p>
+      <h1>Simple Upload file</h1>
+      <Form method="post" encType="multipart/form-data">
+        <input
+          name="myFile"
+          multiple
+          type="file"
+          accept="image/*"
+        />
+        <br />
+        <button type="submit">
+          Upload
+        </button>
+      </Form>
     </div>
   )
 }

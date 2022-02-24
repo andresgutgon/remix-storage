@@ -7,12 +7,15 @@
   "main": "dist/index.js",
   "scripts": {
     "lint": "shared-scripts lint src/**/*.{ts,tsx}",
-    "watch": "shared-scripts watch src/**/*.{ts,tsx}",
+    "watch": "shared-scripts watch src/index.ts",
     "build": ""
   },
   "dependencies": {
     "@tools/shared-scripts": "workspace:*",
     "@tools/eslint-config": "workspace:*",
+    "@web-std/file": "^3.0.2",
+    "@remix-run/node": "1.2.1",
+    "remix": "^1.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

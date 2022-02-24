@@ -3,8 +3,8 @@ module.exports = {
   plugins: ["prettier"],
   rules: {
     camelcase: "error",
-    quotes: ["error", "double", {allowTemplateLiterals: true}],
-    semi: ["error", "never", {beforeStatementContinuationChars: "always"}],
+    quotes: ["error", "double", { allowTemplateLiterals: true }],
+    semi: ["error", "never", { beforeStatementContinuationChars: "always" }],
     "arrow-body-style": ["error", "as-needed"],
   },
   overrides: [
@@ -14,6 +14,11 @@ module.exports = {
       rules: {
         "import/extensions": "off",
         "import/no-unresolved": "off",
+        "object-curly-spacing": [
+          "error",
+          "always",
+          { objectsInObjects: false },
+        ],
       },
     },
   ],
