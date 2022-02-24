@@ -14,8 +14,7 @@ TBD...
 ## ROADMAP
 TBD...
 
-## Development
-Install dependencies.
+# Development
 This project is a monorepo that has [pnpm.ip](https://pnpm.io/) as Node package
 manager (An alternative to `npm` or `yarn1`).
 Also has as monorepo manager [rushjs.io](https://rushjs.io/).
@@ -25,15 +24,31 @@ The idea is that Rush takes care of
 2. Watching for changes in all the packages
 3. Release process.
 
-When developing some of the packages you can use one of the existing Remix apps
-inside `./examples/` folder or create a new one.
-Go to one of then and run
+First [install pnpm](https://pnpm.io/installation) following the instructions
+for your OS.
+Then install Rush with this command.
 ```
-rush build:watch --to-except @examples/[APP_YOU_WANT]
-```
-In another terminal run `pnpm run dev` remix command.
+npm install -g @microsoft/rush
 
-## How works PM2 and Nodemon together to refresh `node_modules`?
+```
+
+### Dev an example Remix app
+The idea is to use this lib `@remix-storage` inside `./examples/` folder which
+are Remix applications we have for different use cases.
+The way we develop and example is by doing this:
+```
+cd ./examples/basic/ // Use other than /basic if you want
+// No in one terminat run this:
+// This will compile and watch @remix-storage
+rush build:watch --to-except @examples/basic
+
+// In other terminal run remix dev server
+cd ./examples/basic/
+pnpm run dev
+
+```
+
+### How works PM2 and Nodemon together to refresh `node_modules`?
 In orther to see in realtime changes I make in one of the packages inside one of
 the `./examples` Remix apps I do 3 things:
 
