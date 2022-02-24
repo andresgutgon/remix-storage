@@ -20,6 +20,8 @@ jobs:
       # Get code from repo
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       # Install NodeJS
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
