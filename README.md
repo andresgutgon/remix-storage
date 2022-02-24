@@ -5,7 +5,7 @@ TBD...
 - [x] Setup examples folder for remix projects to develop the lib
 - [x] Make esbuild and TS watchers work together. Try [tsup](https://tsup.egoist.sh)
 - [x] Setup ESLint + Prettier in `@remix-storage/core`
-- [ ] Setup Eslint as in this article: https://bereghici.dev/blog/build-a-scalable-front-end-with-rush-monorepo-and-react--eslint+lint-staged
+- [x] Setup Eslint as in this article: https://bereghici.dev/blog/build-a-scalable-front-end-with-rush-monorepo-and-react--eslint+lint-staged
 - [ ] Develop the first feature!!!
 - [ ] Build production package with Rollup + esbuild
 - [ ] Understand how release / publish proccess works
