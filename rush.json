@@ -15,15 +15,11 @@
     "postRushBuild": []
   },
   "repository": {
-    "url": "https://github.com/andresgutgon/remix-storage"
+    "url": "https://github.com/andresgutgon/remix-storage",
+    "defaultBranch": "main"
   },
   "variants": [],
   "projects": [
-    {
-      "packageName": "@examples/basic",
-      "projectFolder": "examples/basic",
-      "reviewCategory": "examples"
-    },
     {
       "packageName": "@remix-storage/core",
       "projectFolder": "packages/core",
@@ -33,6 +29,21 @@
       "packageName": "@remix-storage/filesystem",
       "projectFolder": "packages/filesystem",
       "reviewCategory": "packages"
+    },
+    {
+      "packageName": "@tools/eslint-config",
+      "projectFolder": "tools/eslint-config",
+      "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@tools/shared-scripts",
+      "projectFolder": "tools/shared-scripts",
+      "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@examples/basic",
+      "projectFolder": "examples/basic",
+      "reviewCategory": "examples"
     }
   ]
 }

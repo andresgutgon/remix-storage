@@ -5,7 +5,8 @@ TBD...
 - [x] Setup examples folder for remix projects to develop the lib
 - [x] Make esbuild and TS watchers work together. Try [tsup](https://tsup.egoist.sh)
 - [x] Setup ESLint + Prettier in `@remix-storage/core`
-- [ ] Develop the first feature
+- [x] Setup Eslint as in this article: https://bereghici.dev/blog/build-a-scalable-front-end-with-rush-monorepo-and-react--eslint+lint-staged
+- [ ] Develop the first feature!!!
 - [ ] Build production package with Rollup + esbuild
 - [ ] Understand how release / publish proccess works
 - [ ] Define all I want to do in this project
@@ -42,3 +43,6 @@ the `./examples` Remix apps I do 3 things:
 
 So every Remix app that we want to actively listen to changes in `./packages/**/*.{js,dt.ts}` we have to setup PM2 with a Nodemon watcher.
 
+## References
+- This article and repo are interesting. I copied from there []the linter](https://bereghici.dev/blog/build-a-scalable-front-end-with-rush-monorepo-and-react--eslint+lint-staged)
+- Commit format reference [conventionalcommits.org](https://www.conventionalcommits.org/en/v1.0.0/)

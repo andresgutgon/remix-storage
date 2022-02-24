@@ -24,6 +24,6 @@ module.exports = {
       script: "nodemon -e js,d.ts --watch node_modules/@remix-storage --on-change-only --exec \"touch app/refresh.ignore\" --config nodemon-watch.json",
       watch: false,
       env: { NODE_ENV: "development" }
-    },
+    }
   ],
 }
