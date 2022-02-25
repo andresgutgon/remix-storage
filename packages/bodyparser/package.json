@@ -1,0 +1,44 @@
+{
+  "name": "@remix-storage/bodyparser",
+  "version": "0.1.0",
+  "description": "Package for parsing a multipart/form-data request on Remix",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "shared-scripts lint src/**/*.{ts,tsx}",
+    "watch": "shared-scripts watch src/index.ts",
+    "build": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andresgutgon/remix-storage.git"
+  },
+  "keywords": [
+    "Storage",
+    "Remix",
+    "body",
+    "parser",
+    "multipart",
+    "form-data"
+  ],
+  "author": "Andrés Gutiérrez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andresgutgon/remix-storage/issues"
+  },
+  "homepage": "https://github.com/andresgutgon/remix-storage#readme",
+  "devDependencies": {
+    "@tools/shared-scripts": "workspace:*",
+    "@tools/eslint-config": "workspace:*"
+  },
+  "dependencies": {
+    "@remix-storage/drive": "workspace:*",
+    "@poppinss/co-body": "^1.1.3",
+    "@poppinss/multiparty": "^2.0.1",
+    "@poppinss/utils": "^4.0.2",
+    "bytes": "^3.1.2",
+    "end-of-stream": "^1.4.4",
+    "file-type": "^16.5.3",
+    "fs-extra": "^10.0.1",
+    "media-typer": "^1.1.0"
+  }
+}

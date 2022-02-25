@@ -4,4 +4,6 @@ export type {
   Visibility,
   DriveFileStats,
   WriteOptions,
+  DisksList,
 } from "./drive"
+export { LocalDriverConfig, LocalDriverContract } from "./localDrive"

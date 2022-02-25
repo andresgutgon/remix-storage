@@ -1,9 +1,11 @@
 {
-  "name": "@remix-storage/local",
+  "name": "@remix-storage/drive",
   "version": "0.1.0",
-  "description": "Local filesystem driver of remix-storage, use for development mostly",
-  "main": "index.js",
+  "description": "Manage local drive and selected drives creation for @remix-storage",
+  "main": "dist/index.js",
   "scripts": {
+    "lint": "shared-scripts lint src/**/*.{ts,tsx}",
+    "watch": "shared-scripts watch src/index.ts",
     "build": ""
   },
   "repository": {
@@ -23,12 +25,13 @@
   },
   "homepage": "https://github.com/andresgutgon/remix-storage",
   "dependencies": {
-    "@remix-storage/core": "workspace:*",
     "@poppinss/utils": "^4.0.2",
     "fs-extra": "^10.0.1",
     "etag": "^1.8.1"
   },
   "devDependencies": {
+    "@tools/shared-scripts": "workspace:*",
+    "@tools/eslint-config": "workspace:*",
     "@types/node": "16.11.7",
     "@types/fs-extra": "^9.0.13",
     "@types/etag": "1.8.1",

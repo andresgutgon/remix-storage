@@ -26,8 +26,13 @@
       "reviewCategory": "packages"
     },
     {
-      "packageName": "@remix-storage/local",
-      "projectFolder": "packages/local",
+      "packageName": "@remix-storage/drive",
+      "projectFolder": "packages/drive",
+      "reviewCategory": "packages"
+    },
+    {
+      "packageName": "@remix-storage/bodyparser",
+      "projectFolder": "packages/bodyparser",
       "reviewCategory": "packages"
     },
     {

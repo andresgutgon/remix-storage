@@ -18,6 +18,11 @@ export type ContentHeaders = {
 }
 
 /**
+ * A list of disks registered in the user land
+ */
+export interface DisksList {}
+
+/**
  * Options for writing, moving and copying files
  */
 export type WriteOptions = {

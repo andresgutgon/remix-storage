@@ -1,6 +1,6 @@
 import * as fsExtra from "fs-extra"
 
-import type { Visibility, DriverContract } from "@remix-storage/core"
+import type { Visibility, DriverContract } from "./drive"
 
 /**
  * Config accepted by the local disk driver

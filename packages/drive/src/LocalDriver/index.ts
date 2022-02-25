@@ -3,7 +3,7 @@ import * as fsExtra from "fs-extra"
 import etag from "etag"
 import { Visibility, DriveFileStats, ContentHeaders } from "@remix-storage/core"
 
-import { LocalDriverContract, LocalDriverConfig } from "./typings"
+import { LocalDriverContract, LocalDriverConfig } from "../typings"
 
 import {
   CannotCopyFileException,
@@ -16,7 +16,7 @@ import {
 } from "./Exceptions"
 
 import { pipelinePromise } from "./utils"
-import { LocalFileServer } from "./LocalFileServer"
+import { LocalFileServer } from "../LocalFileServer"
 
 /**
  * TODO: FAKE RouterContract

@@ -3,15 +3,7 @@ import {
   unstable_parseMultipartFormData,
   ActionFunction
 } from "remix"
-import { Driver, fileParser } from "@remix-storage/core"
-
-class Foo implements Driver {
-  hello(): string {
-    return "HOLA"
-  }
-}
-
-console.log("HOLA", Foo)
+import { fileParser } from "@remix-storage/core"
 
 export const action: ActionFunction = async ({ request }) => {
   console.log("REQUEST", request)
