@@ -17,7 +17,7 @@
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
     "bfj": "^7.0.2",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.0.1",
     "identity-obj-proxy": "^3.0.0",
     "lint-staged": "~11.0.0",
     "resolve": "^1.20.0",

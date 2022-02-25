@@ -4,6 +4,4 @@ export type {
   Visibility,
   DriveFileStats,
   WriteOptions,
-} from "./typings"
-
-export * from "./remix"
+} from "./drive"

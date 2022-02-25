@@ -26,8 +26,8 @@
       "reviewCategory": "packages"
     },
     {
-      "packageName": "@remix-storage/filesystem",
-      "projectFolder": "packages/filesystem",
+      "packageName": "@remix-storage/local",
+      "projectFolder": "packages/local",
       "reviewCategory": "packages"
     },
     {

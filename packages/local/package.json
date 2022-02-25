@@ -1,7 +1,7 @@
 {
-  "name": "@remix-storage/filesystem",
+  "name": "@remix-storage/local",
   "version": "0.1.0",
-  "description": "Filesystem driver of remix-storage",
+  "description": "Local filesystem driver of remix-storage, use for development mostly",
   "main": "index.js",
   "scripts": {
     "build": ""
@@ -23,10 +23,15 @@
   },
   "homepage": "https://github.com/andresgutgon/remix-storage",
   "dependencies": {
-    "@remix-storage/core": "workspace:*"
+    "@remix-storage/core": "workspace:*",
+    "@poppinss/utils": "^4.0.2",
+    "fs-extra": "^10.0.1",
+    "etag": "^1.8.1"
   },
   "devDependencies": {
     "@types/node": "16.11.7",
+    "@types/fs-extra": "^9.0.13",
+    "@types/etag": "1.8.1",
     "typescript": "^4.3.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
