@@ -4,8 +4,17 @@
   "affected": {
     "defaultBase": "main"
   },
+  "workspaceLayout": {
+    "examples": "examples",
+    "libsDir": "packages"
+  },
   "cli": {
     "defaultCollection": "@nrwl/workspace"
+  },
+  "generators": {
+    "@nrwl/js:library": {
+      "buildable": true
+    }
   },
   "tasksRunnerOptions": {
     "default": {
