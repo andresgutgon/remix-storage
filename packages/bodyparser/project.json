@@ -1,42 +1,5 @@
 {
   "root": "packages/bodyparser",
   "sourceRoot": "packages/bodyparser/src",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "options": {
-        "outputPath": "dist/packages/bodyparser",
-        "main": "packages/bodyparser/src/index.ts",
-        "tsConfig": "packages/bodyparser/tsconfig.lib.json",
-        "assets": [
-          "packages/bodyparser/*.md"
-        ]
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
-      "options": {
-        "lintFilePatterns": [
-          "packages/bodyparser/**/*.ts"
-        ]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/packages/bodyparser"
-      ],
-      "options": {
-        "jestConfig": "packages/bodyparser/jest.config.js",
-        "passWithNoTests": true
-      }
-    }
-  },
   "tags": []
 }

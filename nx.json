@@ -1,32 +1,39 @@
 {
   "extends": "@nrwl/workspace/presets/core.json",
   "npmScope": "remix-storage",
-  "affected": {
-    "defaultBase": "main"
-  },
   "workspaceLayout": {
-    "examples": "examples",
+    "appsDir": "examples",
     "libsDir": "packages"
   },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  },
-  "generators": {
-    "@nrwl/js:library": {
-      "buildable": true
-    }
+  "affected": {
+    "defaultBase": "main"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test"]
       }
     }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
+    "dev": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
+    "start": [
+      {
+        "target": "build",
+        "projects": "self"
+      }
+    ]
   }
 }

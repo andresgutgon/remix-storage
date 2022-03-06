@@ -1,3 +1,3 @@
-export function bodyparser(): string {
-  return "bodyparser"
+export function bodyparser(say: string): string {
+  return say
 }

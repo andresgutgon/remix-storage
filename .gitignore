@@ -1,7 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
 dist
 /tmp
 /out-tsc
@@ -9,6 +8,9 @@ dist
 # dependencies
 /node_modules
 node_modules
+
+# Remix apps cache
+.cache
 
 # IDEs and editors
 /.idea
@@ -40,3 +42,9 @@ testem.log
 .DS_Store
 Thumbs.db
 build
+.cache
+
+# Remix files
+apps/**/build
+apps/**/.cache
+

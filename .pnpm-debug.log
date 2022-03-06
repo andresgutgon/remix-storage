@@ -1,0 +1,23 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 info pnpm": {
+    "err": {
+      "name": "Error",
+      "message": "not found: storage",
+      "code": "ENOENT",
+      "stack": "Error: not found: storage\n    at getNotFoundError (/opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:41585:51)\n    at Function.whichSync [as sync] (/opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:41662:13)\n    at getCommandAbsolutePathSync (/opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:43227:44)\n    at default_1 (/opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:43236:32)\n    at /opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:178156:39"
+    }
+  },
+  "2 error pnpm": {
+    "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+    "prefix": "/Users/andres/code/opensource/remix-storage",
+    "err": {
+      "name": "pnpm",
+      "message": "not found: storage",
+      "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+      "stack": "Error: not found: storage\n    at getNotFoundError (/opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:41585:51)\n    at Function.whichSync [as sync] (/opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:41662:13)\n    at getCommandAbsolutePathSync (/opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:43227:44)\n    at default_1 (/opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:43236:32)\n    at /opt/homebrew/Cellar/node/17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.2/node_modules/pnpm/dist/pnpm.cjs:178156:39"
+    }
+  }
+}
