@@ -49,3 +49,12 @@ apps/**/build
 apps/**/.cache
 
 .pnpm-debug.log
+
+# Test files never commit to git
+packages/bodyparser/fixtures/uploads/*
+!packages/bodyparser/fixtures/uploads/.gitkeep
+
+
+
+# Ignore Zod
+packages/zod
