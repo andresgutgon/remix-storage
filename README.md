@@ -1,3 +1,7 @@
+## TODO
+
+- [] Copy body parser implementation from remix-storage-backup and do TDD
+
 ## Test the lib with a remix application example
 
 To see in action `remix-storage` in a Remix app:

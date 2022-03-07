@@ -12,9 +12,7 @@
   "scripts": {
     "clean": "shx rm -rf dist",
     "prepack": "cross-env NODE_ENV=production pnpm run build",
-    "build:common": "rollup -c",
-    "build": "pnpm clean && pnpm build:common",
-    "watch": "pnpm build:common -- --watch",
+    "build": "pnpm clean && pnpm rollup -c",
     "lint": "prettier -c src/** && eslint src/**/*.ts",
     "lint:fix": "prettier -w src/** && eslint src/**/*.ts --fix",
     "test": "vitest run",
