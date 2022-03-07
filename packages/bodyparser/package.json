@@ -1,0 +1,36 @@
+{
+  "name": "@remix-storage/bodyparser",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Parse request body on Remix apps allowing a Zod schema for validations. Handling also files fields",
+  "keywords": ["files-uploads", "zod", "remix", "web"],
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["/dist"],
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "prepack": "cross-env NODE_ENV=production pnpm run build",
+    "build:common": "rollup -c",
+    "build": "pnpm clean && pnpm build:common",
+    "watch": "pnpm build:common -- --watch",
+    "lint": "prettier -c src/** && eslint src/**/*.ts",
+    "lint:fix": "prettier -w src/** && eslint src/**/*.ts --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "tsc": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.11.6"
+  },
+  "devDependencies": {
+    "vite": "^2.8.4",
+    "zod": "^3.11.6"
+  },
+  "engine-strict": true,
+  "engines": {
+    "node": "^14.13.1 || >=16.0.0 || >=17.0.0"
+  },
+  "os": ["darwin", "linux", "win32"]
+}
