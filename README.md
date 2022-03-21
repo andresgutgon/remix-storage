@@ -19,10 +19,11 @@
 - [x] Ensure required fields are present
 - [x] Throw FileShape on `validateFile`
 - [x] Validate file MIN size and return errors defined by user or default
-- [ ] Handle file input with `multiple=true`
+- [x] Handle file input with `multiple=true`
 - [ ] Handle array of fields `my_field[]` return Array of strings or Enum
 - [] Make a wrapper around z.file to initialize with `FileShape`
 - [] Handle `busboy` limits errors
+- [] Publish in npm.io :tada:
 
 ## Next TODO
 

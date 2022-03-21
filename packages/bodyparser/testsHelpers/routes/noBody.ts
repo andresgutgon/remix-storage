@@ -1,7 +1,6 @@
 import express from "express"
 
 import { configParser } from "../../testsHelpers/utils"
-import { fixtures } from "../../fixtures/form-data"
 import { createRemixRequest } from "../createRemixRequest"
 
 export const noBodyHandler = express.Router()
@@ -14,10 +13,7 @@ noBodyHandler.get(noBodyRoutes.default, async (req, response) => {
   const parser = configParser()
   let error = null
   try {
-    await parser.parse({
-      request,
-      schema: fixtures.fields.schema
-    })
+    await parser.parse({ request })
   } catch (e: unknown) {
     error = (e as Error).message
   }

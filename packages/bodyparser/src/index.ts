@@ -42,6 +42,10 @@ export class BodyParser {
 
   async parse<T>({ request, schema }: ParseParams<T>): Promise<ParseResult> {
     const stream = buildStream(request.body as unknown as Body)
+    // Prevent already piped data in busboy's internal buffer from firing more events
+    // We need to prevent the previously piped data from causing any more 'field' or 'file'
+    // event handlers to be fired
+    // More info: https://bytearcher.com/articles/terminate-busboy/
     const queue = new PQueue({ concurrency: PROCESS_CONCURRENCY })
     const busboy = buildBusboy({
       headers: { contentType: request.headers.get("Content-Type") },
@@ -110,7 +114,17 @@ export class BodyParser {
                 encoding,
                 mimeType
               })
-              files[name] = file
+              const value = files[name] as FileShape
+              let newValue
+              if (Array.isArray(value)) {
+                value.push(file)
+                newValue = value
+              } else if (value) {
+                newValue = [value, file]
+              } else {
+                newValue = file
+              }
+              files[name] = newValue
             } finally {
               filestream.resume()
             }

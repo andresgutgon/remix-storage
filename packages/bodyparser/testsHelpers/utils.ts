@@ -35,6 +35,7 @@ export function syncDeleteFile(filepath: string | null) {
   if (!filepath) return
   fs.unlinkSync(filepath)
 }
+
 async function cleanUploads() {
   const cleaning = new Promise((resolve, reject) => {
     fs.readdir(fixturesFolder, (error, data) => {

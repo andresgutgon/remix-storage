@@ -2,17 +2,10 @@ import fs from "fs-extra"
 
 import { FileShape } from "../lib/fileShape"
 import { Schema } from "../index"
+import { functions } from "lodash"
 
 // Expected Data
-type Data =
-  | string
-  | number
-  | FileShape
-  | string[]
-  | number[]
-  | boolean
-  | null
-  | undefined
+type Data = null | string | undefined | FileShape | FileShape[]
 
 export type ResultData = Record<string, Data>
 type FieldErrors = Record<string, string[]>
@@ -26,7 +19,7 @@ export interface ParseResult {
 
 function completeMissingData<T>(
   result: ParseResult,
-  schema: Schema<T> | undefined
+  schema: Schema<T> | undefined | null
 ): ParseResult {
   if (!schema) return result
 
@@ -57,13 +50,28 @@ function completeMissingData<T>(
   }
 }
 
-function removeFile(value: unknown, isFile: boolean) {
-  if (!isFile) return
+function valueIsFile(value: unknown): boolean {
+  if (!value) return false
+  if (value instanceof FileShape) return true
+  if (!Array.isArray(value)) return false
+  return !!value.find((item) => item instanceof FileShape)
+}
 
-  const filepath = (value as FileShape).filepath as string
+function removeFile(file: FileShape | undefined) {
+  const filepath = file?.filepath as string
+  if (!filepath) return
+
   // Ignore not existing files
   fs.removeSync(filepath)
 }
+
+function removeFiles(value: unknown | unknown[], isFile: boolean) {
+  if (!isFile) return
+  const files = Array.isArray(value) ? value : [value]
+
+  files.forEach((file) => removeFile(file))
+}
+
 const NO_ERRORS = { fieldErrors: {}, formErrors: [] }
 type Props<T> = {
   fields: ResultData
@@ -95,7 +103,7 @@ async function combineFieldsAndFiles<T>({
     resultData = Object.keys(unsafeData).reduce(
       (memo: ResultData, key: string) => {
         const value = unsafeData[key]
-        const isFile = value instanceof FileShape
+        const isFile = valueIsFile(value)
 
         if (!errors.fieldErrors[key]) {
           memo[key] = isFile ? null : value
@@ -103,7 +111,7 @@ async function combineFieldsAndFiles<T>({
           memo[key] = null
         }
 
-        removeFile(value, isFile)
+        removeFiles(value, isFile)
 
         return memo
       },

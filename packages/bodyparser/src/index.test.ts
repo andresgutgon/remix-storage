@@ -469,11 +469,48 @@ describe("No schema", () => {
   })
 })
 
-describe("Hanlde file field with a list of files")
+describe("Hanlde file field with a list of files", () => {
+  cleanUploadsBeforeAndAfter()
+  test("Upload multiple files", async () => {
+    const response = await server
+      .post(routes.fieldsRoutes.default)
+      .query({ schema: schemaKeys.multiplesFiles })
+      .field("field_two", "field_two_content")
+      .attach("field_one", filePath("Ratón pequeño.jpeg"))
+      .attach("field_one", filePath("elephant.jpg"))
+    const files = response.body.data.field_one
 
-describe.todo("Arrays of files or fields", () => {
-  test.todo("array fields. Like a list of checkbox")
-  test.todo("file with multiple=true return array of files")
+    expect(files[0].filename).toBe("raton-pequeno.jpeg")
+    expect(files[1].filename).toBe("elephant.jpg")
+  })
 })
 
-describe.todo("Parse JSON requests")
+describe("Handle a list of files with errors", () => {
+  test("display validation error", async () => {
+    const response = await server
+      .post(routes.fieldsRoutes.default)
+      .query({ schema: schemaKeys.multiplesFilesMinSize })
+      .field("field_two", "field_two_content")
+      .attach("field_one", filePath("Ratón pequeño.jpeg"))
+      .attach("field_one", filePath("elephant.jpg"))
+
+    expect(response.body).toEqual({
+      success: false,
+      data: { field_one: null, field_two: "field_two_content" },
+      fieldErrors: {
+        field_one: [
+          `The file is too small, minimum size required is: ${MIN_SIZE_FILE} bytes`
+        ],
+        field_two: []
+      },
+      formErrors: []
+    })
+    expect(readFile("raton-pequeno.jpeg")).toBeNull()
+    expect(readFile("elephant.jpg")).toBeNull()
+  })
+})
+
+describe.todo("Array of values in a field[]", () => {
+  test.todo("Parse it")
+  test.todo("display validation errors")
+})

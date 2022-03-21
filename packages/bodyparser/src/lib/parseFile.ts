@@ -60,7 +60,7 @@ export async function parseFile({
   filestream,
   filename,
   mimeType
-}: Props): Promise<FileShape | undefined> {
+}: Props): Promise<FileShape> {
   const { filepath, fileName } = await makeFile(directory, filename, mimeType)
   const file = new FileShape(name, mimeType, 0)
   file.name = fileName

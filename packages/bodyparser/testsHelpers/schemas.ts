@@ -24,6 +24,12 @@ export const schemas = {
   simpleFile: defaultSchema.extend({
     field_one: z.file({}, FileShape)
   }),
+  multiplesFiles: defaultSchema.extend({
+    field_one: z.array(z.file({}, FileShape))
+  }),
+  multiplesFilesMinSize: defaultSchema.extend({
+    field_one: z.array(z.file({}, FileShape).min(MIN_SIZE_FILE))
+  }),
   simpleFieldOptional: defaultSchema.extend({
     field_one: z.string().optional()
   }),
