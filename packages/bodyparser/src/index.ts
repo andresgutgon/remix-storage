@@ -8,7 +8,13 @@ import {
   BusboyConfig,
   DEFAULT_BUSBOY_CONFIG
 } from "./lib/buildBusboy"
-import { ParseResult, ResultData, processResult } from "./lib/processResult"
+import {
+  ParseResult,
+  ResultData,
+  Data,
+  processValue,
+  processResult
+} from "./lib/processResult"
 import { parseFile } from "./lib/parseFile"
 import { FileShape } from "./lib/fileShape"
 
@@ -94,7 +100,7 @@ export class BodyParser {
 
       busboy.on("field", (name, value) => {
         enqueuFn(async () => {
-          fields[name] = value
+          fields[name] = processValue(fields[name], value) as Data
         })
       })
 
@@ -114,17 +120,7 @@ export class BodyParser {
                 encoding,
                 mimeType
               })
-              const value = files[name] as FileShape
-              let newValue
-              if (Array.isArray(value)) {
-                value.push(file)
-                newValue = value
-              } else if (value) {
-                newValue = [value, file]
-              } else {
-                newValue = file
-              }
-              files[name] = newValue
+              files[name] = processValue(files[name], file) as FileShape
             } finally {
               filestream.resume()
             }

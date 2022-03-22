@@ -511,7 +511,65 @@ describe("Handle a list of files with errors", () => {
   })
 })
 
-describe.todo("Array of values in a field[]", () => {
-  test.todo("Parse it")
-  test.todo("display validation errors")
+describe("Array of values in a field[]", () => {
+  test("Parse a list of strings", async () => {
+    const response = await server
+      .post(routes.fieldsRoutes.default)
+      .query({ schema: schemaKeys.fieldAsArray })
+      .field("field_one", "1")
+      .field("field_one", "2")
+      .field("field_one", "3")
+      .field("field_two", "field_two_content")
+    expect(response.body).toEqual({
+      success: true,
+      data: {
+        field_one: ["1", "2", "3"],
+        field_two: "field_two_content"
+      },
+      fieldErrors: { field_one: [], field_two: [] },
+      formErrors: []
+    })
+  })
+
+  test("display error when the array is missing", async () => {
+    const response = await server
+      .post(routes.fieldsRoutes.default)
+      .query({ schema: schemaKeys.fieldAsArray })
+      .field("field_one", "")
+      .field("field_two", "field_two_content")
+    expect(response.body).toEqual({
+      success: false,
+      data: {
+        field_one: null,
+        field_two: "field_two_content"
+      },
+      fieldErrors: {
+        field_one: ["Expected array, received string"],
+        field_two: []
+      },
+      formErrors: []
+    })
+  })
+
+  test("display error if array < 3", async () => {
+    const response = await server
+      .post(routes.fieldsRoutes.default)
+      .query({ schema: schemaKeys.fieldAsArrayMinThreeElements })
+      .field("field_one", "0")
+      .field("field_one", "2")
+      .field("field_two", "field_two_content")
+
+    expect(response.body).toEqual({
+      success: false,
+      data: {
+        field_one: null,
+        field_two: "field_two_content"
+      },
+      fieldErrors: {
+        field_one: ["Array must contain at least 3 element(s)"],
+        field_two: []
+      },
+      formErrors: []
+    })
+  })
 })

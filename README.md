@@ -69,6 +69,7 @@ nx test:watch bodyparser
 [Author of zod explain his motivation for building zod](https://colinhacks.com/essays/zod)
 [An article linked on the previous link, "parse don't validate"](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/)
 [Efficient Busboy stop processing data with p-queue](https://bytearcher.com/articles/terminate-busboy/)
+[Type of request with AJAX](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#submitting_forms_and_uploading_files)
 
 ### Streams
 

@@ -15,6 +15,12 @@ const defaultSchema = z.object({
 export const schemas = {
   noSchema: "noSchema",
   default: defaultSchema,
+  fieldAsArray: defaultSchema.extend({
+    field_one: z.array(z.string())
+  }),
+  fieldAsArrayMinThreeElements: defaultSchema.extend({
+    field_one: z.array(z.preprocess((v) => Number(v), z.number())).min(3)
+  }),
   fieldAsFile: defaultSchema.extend({
     field_two: z.file({}, FileShape)
   }),

@@ -4,7 +4,10 @@ import { FileShape } from "../lib/fileShape"
 import { Schema } from "../index"
 
 // Expected Data
-type Data = null | string | undefined | FileShape | FileShape[]
+type SingleData = null | string | number | undefined | FileShape
+type ArrayData = string[] | number[] | FileShape[]
+
+export type Data = SingleData | ArrayData
 
 export type ResultData = Record<string, Data>
 type FieldErrors = Record<string, string[]>
@@ -127,4 +130,23 @@ export async function processResult<T>(props: Props<T>): Promise<ParseResult> {
   const result = await combineFieldsAndFiles(props)
 
   return completeMissingData(result, schema)
+}
+
+/**
+ * Fields and Files can be a unique element or an
+ * array of elements. A list of files or strings
+ * this method takes care of handling this duality
+ */
+export function processValue<Thing>(
+  prevValue: Thing | Thing[],
+  newValue: Thing
+): Thing | Thing[] {
+  if (Array.isArray(prevValue)) {
+    prevValue.push(newValue)
+    return prevValue
+  }
+
+  if (prevValue) return [prevValue, newValue]
+
+  return newValue
 }
