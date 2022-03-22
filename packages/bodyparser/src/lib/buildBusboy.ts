@@ -19,9 +19,6 @@ export function buildBusboy({
 }: Props): Busboy.Busboy {
   invariant(contentType, "MIME type not provided in request")
   return Busboy({
-    // PR: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/59301
-    // eslint-disable-next-line
-    // @ts-ignore
     defParamCharset: "utf8",
     highWaterMark: config.highWaterMark,
     headers: {

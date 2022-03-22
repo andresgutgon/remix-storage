@@ -2,7 +2,6 @@ import fs from "fs-extra"
 
 import { FileShape } from "../lib/fileShape"
 import { Schema } from "../index"
-import { functions } from "lodash"
 
 // Expected Data
 type Data = null | string | undefined | FileShape | FileShape[]
@@ -38,14 +37,8 @@ function completeMissingData<T>(
   )
   return {
     success: result.success,
-    data: {
-      ...empty.data,
-      ...result.data
-    },
-    fieldErrors: {
-      ...empty.fieldErrors,
-      ...result.fieldErrors
-    },
+    data: { ...empty.data, ...result.data },
+    fieldErrors: { ...empty.fieldErrors, ...result.fieldErrors },
     formErrors: result.formErrors
   }
 }

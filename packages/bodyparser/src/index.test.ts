@@ -471,6 +471,7 @@ describe("No schema", () => {
 
 describe("Hanlde file field with a list of files", () => {
   cleanUploadsBeforeAndAfter()
+
   test("Upload multiple files", async () => {
     const response = await server
       .post(routes.fieldsRoutes.default)
