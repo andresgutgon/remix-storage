@@ -1,50 +1,8 @@
 import fs from "fs-extra"
 
 import { FileShape } from "../lib/fileShape"
-import { Schema } from "../index"
-
-// Expected Data
-type SingleData = null | string | number | undefined | FileShape
-type ArrayData = string[] | number[] | FileShape[]
-
-export type Data = SingleData | ArrayData
-
-export type ResultData = Record<string, Data>
-type FieldErrors = Record<string, string[]>
-type FormErrors = string[]
-export interface ParseResult {
-  success: boolean
-  data: ResultData
-  fieldErrors: FieldErrors
-  formErrors: FormErrors
-}
-
-function completeMissingData<T>(
-  result: ParseResult,
-  schema: Schema<T> | undefined | null
-): ParseResult {
-  if (!schema) return result
-
-  const empty = Object.keys(schema.shape).reduce(
-    (memo: ParseResult, key: string) => {
-      memo.data[key] = result.data[key] || null
-      memo.fieldErrors[key] = result.fieldErrors[key] || []
-      return memo
-    },
-    {
-      success: true,
-      data: {},
-      fieldErrors: {},
-      formErrors: []
-    }
-  )
-  return {
-    success: result.success,
-    data: { ...empty.data, ...result.data },
-    fieldErrors: { ...empty.fieldErrors, ...result.fieldErrors },
-    formErrors: result.formErrors
-  }
-}
+import { myCustomErrorMap as errorMap } from "../zod-addons/internal/ZodError"
+import { Schema, ParsedData, ParseResult } from "../parser/types"
 
 function valueIsFile(value: unknown): boolean {
   if (!value) return false
@@ -68,70 +26,6 @@ function removeFiles(value: unknown | unknown[], isFile: boolean) {
   files.forEach((file) => removeFile(file))
 }
 
-const NO_ERRORS = { fieldErrors: {}, formErrors: [] }
-type Props<T> = {
-  fields: ResultData
-  files: ResultData
-  schema?: Schema<T> | null
-}
-async function combineFieldsAndFiles<T>({
-  fields,
-  files,
-  schema
-}: Props<T>): Promise<ParseResult> {
-  const unsafeData = { ...fields, ...files }
-
-  if (!schema) {
-    return {
-      success: true,
-      data: unsafeData,
-      ...NO_ERRORS
-    }
-  }
-
-  const result = await schema.safeParseAsync(unsafeData)
-
-  const errors = !result.success ? result.error.flatten?.() : NO_ERRORS
-
-  let resultData = {}
-  if (!result.success) {
-    // Remove files when there is an error
-    resultData = Object.keys(unsafeData).reduce(
-      (memo: ResultData, key: string) => {
-        const value = unsafeData[key]
-        const isFile = valueIsFile(value)
-
-        if (!errors.fieldErrors[key]) {
-          memo[key] = isFile ? null : value
-        } else {
-          memo[key] = null
-        }
-
-        removeFiles(value, isFile)
-
-        return memo
-      },
-      {}
-    )
-  } else {
-    resultData = result.data
-  }
-  return {
-    success: result.success,
-    data: resultData,
-    fieldErrors: errors.fieldErrors || {},
-    formErrors: errors.formErrors || []
-  }
-}
-
-export async function processResult<T>(props: Props<T>): Promise<ParseResult> {
-  const schema = props.schema
-
-  const result = await combineFieldsAndFiles(props)
-
-  return completeMissingData(result, schema)
-}
-
 /**
  * Fields and Files can be a unique element or an
  * array of elements. A list of files or strings
@@ -149,4 +43,69 @@ export function processValue<Thing>(
   if (prevValue) return [prevValue, newValue]
 
   return newValue
+}
+
+type Props<T> = {
+  fields: ParsedData<T>
+  files: ParsedData<T>
+  schema: Schema<T>
+}
+export async function processResult<T>({
+  fields,
+  files,
+  schema
+}: Props<T>): Promise<ParseResult<T>> {
+  const allData = { ...fields, ...files }
+
+  const result = await schema.safeParseAsync(allData, {
+    errorMap
+  })
+
+  if (!result.success) {
+    const keys = Object.entries(schema.shape)
+    const nullData = keys.reduce((acc, [key]) => {
+      acc[key] = null
+      return acc
+    }, {} as { [key: string]: null })
+    const emptyFieldErrors = keys.reduce((acc, [key]) => {
+      acc[key] = []
+      return acc
+    }, {} as { [key: string]: [] })
+    const errors = result.error.flatten()
+    const dataKeys = Object.entries(allData)
+    const data = dataKeys.reduce<ParsedData<T>>((memo, [key]) => {
+      const safeKey = key as keyof T
+      const value = allData[safeKey]
+      const isFile = valueIsFile(value)
+
+      if (!errors.fieldErrors[key]) {
+        memo[safeKey] = isFile ? null : value
+      } else {
+        memo[safeKey] = null
+      }
+
+      removeFiles(value, isFile)
+
+      return memo
+    }, {})
+
+    return {
+      success: false,
+      data: {
+        ...nullData,
+        ...data
+      },
+      fieldErrors: {
+        ...emptyFieldErrors,
+        ...errors.fieldErrors
+      },
+      formErrors: errors.formErrors
+    }
+  }
+
+  // ResultOK
+  return {
+    success: result.success,
+    data: result.data
+  }
 }

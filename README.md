@@ -20,15 +20,20 @@
 - [x] Throw FileShape on `validateFile`
 - [x] Validate file MIN size and return errors defined by user or default
 - [x] Handle file input with `multiple=true`
-- [ ] Handle array of fields `my_field[]` return Array of strings or Enum
-- [] Make a wrapper around z.file to initialize with `FileShape`
+- [x] Handle array of fields `my_field[]` return Array of strings or Enum
+- [x] Make a wrapper around z.file to initialize with `FileShape`
+- [] Fix: "Type instantiation is excessively deep and possibly infinite. typescript (2589)" in Remix example app
+- [] Fix: "No matching export in "node-modules-polyfills:fs" for import "createWriteStream" in Remix example dev server output
 - [] Handle `busboy` limits errors
-- [] Publish in npm.io :tada:
 
 ## Next TODO
 
+- [] Publish in npm.io :tada:
 - [ ] Handle Error that is not a FileShape in Abort. Throw it again. Will be
       done when implementing `@remix-storage/drive`
+- [] Add to parse a `baseData` argument. So this way you can pass data that is
+  not expected in the request but is required by the zod validations and
+  necesary to use in the code that comes after parsing
 
 ## Test the lib with a remix application example
 

@@ -58,3 +58,4 @@ packages/bodyparser/fixtures/uploads/*
 
 # Ignore Zod
 packages/zod
+zod-dev

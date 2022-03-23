@@ -1,21 +1,39 @@
 import { ActionFunction, useActionData } from "remix"
 import { Form, json } from "remix"
 import parser from "../lib/parser.server"
+import { z, file, FileShape } from "~remix-storage/bodyparser"
 
-// ZOd in dev not working
-// const schema = z.object({ name: z.string().max(10) })
+const schema = z.object({
+  field_one: z.string().max(20),
+  field_two: file()
+})
+
 export const action: ActionFunction = async ({ request }) => {
-  const result = await parser.parse({ request })
+  // A body parser that works with Zod
+  // 1. Validates request fields
+  // 2. Upload files
+  // 3. Remove files if validation fails
+  // 4. Return value is typed
+  const result = await parser.parse({ request, schema })
+
+  if (result.success) {
+    console.log("DATA", result.data.field_two)
+  } else {
+    console.log("ERROR", result.data)
+  }
+
+  // FIXME: ShapeFile attributes are not recognized
   return json({ result })
 }
 
-// https://remix.run/guides/routing#index-routes
 export default function Index() {
   const data = useActionData()
   return (
     <main>
       <h2>Remix storage</h2>
-      <pre>{JSON.stringify(data)}</pre>
+      <pre style={{ maxWidth: 400, display: "block" }}>
+        {JSON.stringify(data)}
+      </pre>
       <Form method="post" encType="multipart/form-data">
         {/* <Form method="post"> */}
         <input id="avatar-input" type="file" name="avatar" />

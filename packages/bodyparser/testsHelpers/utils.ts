@@ -2,7 +2,8 @@ import fs from "fs"
 import { resolve } from "path"
 import { afterEach, beforeEach } from "vitest"
 
-import { BodyParser, Options } from "../src/index"
+import { BodyParser } from "../src/parser/index"
+import { BodyParserOptions as Options } from "../src/parser/types"
 export const resolvePath = resolve
 
 export const fixturesFolder = resolvePath(__dirname, "../fixtures/uploads")

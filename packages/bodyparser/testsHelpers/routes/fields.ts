@@ -1,7 +1,9 @@
 import express from "express"
 import path from "path"
 
-import { Options, BodyParser } from "../../src/index"
+import { BodyParser } from "../../src/parser/index"
+import { BodyParserOptions as Options } from "../../src/parser/types"
+
 import { createRemixRequest } from "../createRemixRequest"
 import { getSchema } from "../schemas"
 
@@ -34,8 +36,12 @@ function getParser(request: express.Request): BodyParser {
 fieldsHandler.post(fieldsRoutes.default, async (req, response) => {
   const request = createRemixRequest(req)
   const parser = getParser(req)
+
   const schema = getSchema(req)
-  const result = await parser.parse({ request, schema })
+  const result = await parser.parse({
+    request: request as unknown as Request,
+    schema
+  })
 
   response.status(200).json(result)
 })

@@ -1,9 +1,10 @@
 import express from "express"
 import z from "zod"
 
-import { FileShape } from "../src/lib/fileShape"
+import { file } from "../src/zod-addons/file"
+import { Schema } from "../src/parser/types"
+
 import { errorMap } from "./parserValidationsErrorMap"
-import { Schema } from "../src/index"
 
 export const MIN_SIZE_FILE = 1807
 export const MAX_SIZE_FILE = 163961
@@ -13,53 +14,52 @@ const defaultSchema = z.object({
   field_two: z.string().min(3)
 })
 export const schemas = {
-  noSchema: "noSchema",
   default: defaultSchema,
   fieldAsArray: defaultSchema.extend({
     field_one: z.array(z.string())
   }),
   fieldAsArrayMinThreeElements: defaultSchema.extend({
-    field_one: z.array(z.preprocess((v) => Number(v), z.number())).min(3)
+    field_one: z
+      .array(z.preprocess((v: unknown) => Number(v), z.number()))
+      .min(3)
   }),
   fieldAsFile: defaultSchema.extend({
-    field_two: z.file({}, FileShape)
+    field_two: file()
   }),
   customError: defaultSchema.extend({
-    field_two: z.file({ errorMap }, FileShape)
+    field_two: file({ errorMap })
   }),
   simpleFile: defaultSchema.extend({
-    field_one: z.file({}, FileShape)
+    field_one: file()
   }),
   multiplesFiles: defaultSchema.extend({
-    field_one: z.array(z.file({}, FileShape))
+    field_one: z.array(file())
   }),
   multiplesFilesMinSize: defaultSchema.extend({
-    field_one: z.array(z.file({}, FileShape).min(MIN_SIZE_FILE))
+    field_one: z.array(file().min(MIN_SIZE_FILE))
   }),
   simpleFieldOptional: defaultSchema.extend({
     field_one: z.string().optional()
   }),
   simpleFileOptional: defaultSchema.extend({
-    field_one: z.file({}, FileShape).optional()
+    field_one: file().optional()
   }),
   mimeTypeValidation: defaultSchema.extend({
-    field_one: z.file({}, FileShape).type(["image/png", "application/pdf"])
+    field_one: file().type(["image/png", "application/pdf"])
   }),
   mimeTypeCustomValidation: defaultSchema.extend({
-    field_one: z
-      .file({ errorMap }, FileShape)
-      .type(["image/png", "application/pdf"])
+    field_one: file({ errorMap }).type(["image/png", "application/pdf"])
   }),
   maxSizeValidation: defaultSchema.extend({
-    field_one: z.file({}, FileShape).max(MAX_SIZE_FILE)
+    field_one: file().max(MAX_SIZE_FILE)
   }),
   maxSizeValidationTwoFiles: defaultSchema.extend({
-    field_one: z.file({}, FileShape).max(MAX_SIZE_FILE),
-    field_two: z.file({}, FileShape).max(MAX_SIZE_FILE),
+    field_one: file().max(MAX_SIZE_FILE),
+    field_two: file().max(MAX_SIZE_FILE),
     field_tree: z.preprocess((val) => Number(val), z.number())
   }),
   minSizeValidation: defaultSchema.extend({
-    field_one: z.file({}, FileShape).min(MIN_SIZE_FILE)
+    field_one: file().min(MIN_SIZE_FILE)
   })
 }
 
@@ -79,7 +79,5 @@ type SchemaType = Schema<DefaultSchema>
 export function getSchema(request: express.Request) {
   const query = request.query
   const schemaKey = (query.schema?.toString() || "default") as SchemaKey
-  if (schemaKey === "noSchema") return undefined
-
-  return schemas[schemaKey] as unknown as SchemaType
+  return schemas[schemaKey] as SchemaType
 }

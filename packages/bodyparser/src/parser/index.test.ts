@@ -7,18 +7,18 @@ import {
   readFile,
   copyFile,
   cleanUploadsBeforeAndAfter
-} from "../testsHelpers/utils"
+} from "../../testsHelpers/utils"
 
-import { server } from "../testsHelpers/server"
-import { routes } from "../testsHelpers/routes"
+import { server } from "../../testsHelpers/server"
+import { routes } from "../../testsHelpers/routes"
 import {
   MIN_SIZE_FILE,
   MAX_SIZE_FILE,
   schemaKeys
-} from "../testsHelpers/schemas"
+} from "../../testsHelpers/schemas"
 
 function filePath(filename: string): string {
-  return path.resolve(__dirname, `../fixtures/files/${filename}`)
+  return path.resolve(__dirname, `../../fixtures/files/${filename}`)
 }
 
 describe("no body", () => {
@@ -44,9 +44,7 @@ describe("fields", () => {
       data: {
         field_one: "field_one_content",
         field_two: "field_two_content"
-      },
-      fieldErrors: { field_one: [], field_two: [] },
-      formErrors: []
+      }
     })
   })
 
@@ -62,9 +60,7 @@ describe("fields", () => {
       data: {
         field_one: "field_one_content",
         field_two: "field_two_content"
-      },
-      fieldErrors: { field_one: [], field_two: [] },
-      formErrors: []
+      }
     })
   })
 
@@ -292,11 +288,8 @@ describe("files", () => {
       expect(response.body).toEqual({
         success: true,
         data: {
-          field_one: null,
           field_two: "This is field two content"
-        },
-        fieldErrors: { field_one: [], field_two: [] },
-        formErrors: []
+        }
       })
     })
 
@@ -309,11 +302,8 @@ describe("files", () => {
       expect(response.body).toEqual({
         success: true,
         data: {
-          field_one: null,
           field_two: "This is field two content"
-        },
-        fieldErrors: { field_one: [], field_two: [] },
-        formErrors: []
+        }
       })
     })
   })
@@ -439,36 +429,6 @@ describe("files", () => {
   })
 })
 
-describe("No schema", () => {
-  cleanUploadsBeforeAndAfter()
-
-  test("file upload without schema validation", async () => {
-    const response = await server
-      .post(routes.fieldsRoutes.default)
-      .query({ schema: schemaKeys.noSchema })
-      .attach("field_one", filePath("Ratón pequeño.jpeg"))
-      .field("field_two", "This is a text")
-
-    const filepath = response.body.data.field_one.filepath
-    expect(filepath).toMatch(/\/uploads\/raton-pequeno\.jpeg$/)
-    expect(response.body).toEqual({
-      success: true,
-      data: {
-        field_one: {
-          filepath,
-          fieldName: "field_one",
-          filename: "raton-pequeno.jpeg",
-          size: 1706,
-          type: "image/jpeg"
-        },
-        field_two: "This is a text"
-      },
-      fieldErrors: {},
-      formErrors: []
-    })
-  })
-})
-
 describe("Hanlde file field with a list of files", () => {
   cleanUploadsBeforeAndAfter()
 
@@ -525,9 +485,7 @@ describe("Array of values in a field[]", () => {
       data: {
         field_one: ["1", "2", "3"],
         field_two: "field_two_content"
-      },
-      fieldErrors: { field_one: [], field_two: [] },
-      formErrors: []
+      }
     })
   })
 

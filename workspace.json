@@ -3,6 +3,6 @@
   "projects": {
     "basic": "examples/basic",
     "bodyparser": "packages/bodyparser",
-    "zod": "packages/zod"
+    "zodLol": "packages/zod"
   }
 }
