@@ -11,7 +11,7 @@ export const action: ActionFunction = async ({ request }) => {
   const result = await parser.parse({ request, schema })
 
   if (result.success) {
-    console.log("DATA", result.data.avatar)
+    console.log("DATA", result.data.avatar.type)
   } else {
     console.log("ERROR", result.data)
   }

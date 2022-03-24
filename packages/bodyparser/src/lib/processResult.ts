@@ -1,7 +1,7 @@
 import fs from "fs-extra"
 
 import { FileShape } from "../lib/fileShape"
-import { myCustomErrorMap as errorMap } from "../zod-addons/internal/ZodError"
+import { customErrorMap as errorMap } from "../zod-addons/internal/ZodError"
 import { Schema, ParsedData, ParseResult } from "../parser/types"
 
 function valueIsFile(value: unknown): boolean {

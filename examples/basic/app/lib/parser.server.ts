@@ -8,5 +8,5 @@ export const parser = new BodyParser({
 })
 export const schema = z.object({
   name: z.string().max(20),
-  avatar: file()
+  avatar: file().type(["image/png", "image/jpg", "image/jpeg"])
 })

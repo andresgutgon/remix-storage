@@ -24,13 +24,14 @@
 - [x] Make a wrapper around z.file to initialize with `FileShape`
 - [x] Fix: "Type instantiation is excessively deep and possibly infinite. typescript (2589)" in Remix example app
 - [x] Fix: "No matching export in "node-modules-polyfills:fs" for import "createWriteStream" in Remix example dev server output
-- [] Check why type of `FileShape` is not returning it as an instance. It's a
-  pitty because it's not possible to do `file.size` and the rest.
+- [x] Check why type of `FileShape` is not returning it as an instance. It's a
+      pitty because it's not possible to do `file.size` and the rest.
 - [] Handle `busboy` limits errors
 
 ## Next TODO
 
 - [] Publish in npm.io :tada:
+- [] Implement properly an `IFile` interface
 - [ ] Handle Error that is not a FileShape in Abort. Throw it again. Will be
       done when implementing `@remix-storage/drive`
 - [] Add to parse a `baseData` argument. So this way you can pass data that is

@@ -3,7 +3,7 @@ import { ZodIssueCode, ZodIssueOptionalMessage, defaultErrorMap } from "zod"
 // eslint-disable-next-line
 type ErrorMapCtx = { defaultError: string; data: any }
 
-export const myCustomErrorMap = (
+export const customErrorMap = (
   issue: ZodIssueOptionalMessage,
   ctx: ErrorMapCtx
 ): { message: string } => {

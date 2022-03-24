@@ -8,9 +8,6 @@ import {
   ZodFirstPartyTypeKind,
   ZodIssue,
   IssueData,
-  addIssueToContext,
-  overrideErrorMap,
-  defaultErrorMap,
   INVALID
 } from "zod"
 
@@ -90,20 +87,21 @@ export interface ZodFileDef extends ZodTypeDef {
   checks: ZodFileCheck[]
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export class ZodFile<FileConstructor extends Function> extends ZodType<
-  FileConstructor,
-  ZodFileDef
-> {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  constructor(def: ZodFileDef, private readonly fileConstructor: Function) {
-    super(def)
-  }
+interface IFile {
+  get lastModified(): number
+  get lastModifiedDate(): Date
+  get name(): string
+  get size(): number
+  get type(): string
+}
 
-  _parse(input: ParseInput): ParseReturnType<FileConstructor> {
+export class ZodFile extends ZodType<IFile, ZodFileDef> {
+  _parse(input: ParseInput): ParseReturnType<this["_output"]> {
     const { status, ctx } = this._processInputParams(input)
 
-    if (!(input.data instanceof this.fileConstructor)) {
+    const hasSize = !!input.data?.size
+    const hasType = !!input.data?.type
+    if (!hasSize || !hasType) {
       const issue = makeIssue({
         issueData: {
           code: ZodIssueCode.invalid_type,
@@ -206,17 +204,17 @@ export class ZodFile<FileConstructor extends Function> extends ZodType<
       }
     }
 
-    return { status: status.value, value: ctx.data }
+    return {
+      status: status.value,
+      value: ctx.data
+    }
   }
 
   _addCheck(check: ZodFileCheck) {
-    return new ZodFile(
-      {
-        ...this._def,
-        checks: [...this._def.checks, check]
-      },
-      this.fileConstructor
-    )
+    return new ZodFile({
+      ...this._def,
+      checks: [...this._def.checks, check]
+    })
   }
 
   max(maxSize: number, message?: errorUtil.ErrMessage) {
@@ -277,25 +275,13 @@ export class ZodFile<FileConstructor extends Function> extends ZodType<
     return types
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  static create = <T extends Function = typeof File>(
-    params?: RawCreateParams,
-    fileConstructor?: T
-  ): ZodFile<T> => {
-    if (typeof File === "undefined" && !fileConstructor) {
-      throw new Error(
-        "File not supported in current environment, you need to pass constructor to file()"
-      )
-    }
-
-    return new ZodFile(
-      {
-        typeName: Types.ZodFile,
-        checks: [],
-        ...processCreateParams(params)
-      },
-      fileConstructor || File
-    )
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static create = (params?: RawCreateParams): ZodFile => {
+    return new ZodFile({
+      typeName: Types.ZodFile,
+      checks: [],
+      ...processCreateParams(params)
+    })
   }
 }
 

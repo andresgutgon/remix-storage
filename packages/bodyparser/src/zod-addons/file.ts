@@ -5,7 +5,6 @@ import z from "zod"
 // https://github.com/colinhacks/zod/pull/1017
 import { file as zodFile, ZodFile as ZodFileInternal } from "./internal/file"
 
-import { FileShape } from "../lib/fileShape"
 export type RawCreateParams =
   | {
       errorMap?: z.ZodErrorMap
@@ -15,7 +14,5 @@ export type RawCreateParams =
     }
   | undefined
 
-export type ZodFile = ZodFileInternal<typeof FileShape>
-export function file(params?: RawCreateParams) {
-  return zodFile(params, FileShape)
-}
+export type ZodFile = ZodFileInternal
+export const file = zodFile
