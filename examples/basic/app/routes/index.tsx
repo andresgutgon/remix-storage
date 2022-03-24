@@ -1,12 +1,6 @@
 import { ActionFunction, useActionData } from "remix"
 import { Form, json } from "remix"
-import parser from "../lib/parser.server"
-import { z, file, FileShape } from "~remix-storage/bodyparser"
-
-const schema = z.object({
-  field_one: z.string().max(20),
-  field_two: file()
-})
+import { parser, schema } from "../lib/parser.server"
 
 export const action: ActionFunction = async ({ request }) => {
   // A body parser that works with Zod
@@ -17,7 +11,7 @@ export const action: ActionFunction = async ({ request }) => {
   const result = await parser.parse({ request, schema })
 
   if (result.success) {
-    console.log("DATA", result.data.field_two)
+    console.log("DATA", result.data.avatar)
   } else {
     console.log("ERROR", result.data)
   }
@@ -35,9 +29,12 @@ export default function Index() {
         {JSON.stringify(data)}
       </pre>
       <Form method="post" encType="multipart/form-data">
-        {/* <Form method="post"> */}
+        <input type="text" id="name" name="name" />
+        <br />
+        <br />
         <input id="avatar-input" type="file" name="avatar" />
-        {/* <input type="text" id="name" name="name" /> */}
+        <br />
+        <br />
         <button type="submit">Upload</button>
       </Form>
     </main>
