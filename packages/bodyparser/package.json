@@ -1,14 +1,21 @@
 {
   "name": "@remix-storage/bodyparser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Parse request body on Remix apps allowing a Zod schema for validations. Handling also files fields",
-  "keywords": ["files-uploads", "zod", "remix", "web"],
+  "keywords": [
+    "files-uploads",
+    "zod",
+    "remix",
+    "web"
+  ],
   "license": "MIT",
   "type": "commonjs",
   "main": "index.js",
   "types": "./dist/index.d.ts",
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "clean": "shx rm -rf dist",
     "prepack": "cross-env NODE_ENV=production pnpm run build",
@@ -47,5 +54,9 @@
   "engines": {
     "node": "^14.13.1 || >=16.0.0 || >=17.0.0"
   },
-  "os": ["darwin", "linux", "win32"]
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ]
 }
