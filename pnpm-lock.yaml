@@ -6,7 +6,7 @@ importers:
     specifiers:
       '@babel/core': ^7.17.5
       '@babel/preset-env': ^7.16.11
-      '@changesets/cli': ^2.19.0
+      '@changesets/cli': ^2.21.1
       '@milahu/patch-package-with-pnpm-support': ^6.4.8
       '@nrwl/cli': latest
       '@nrwl/remix': ^13.7.1
