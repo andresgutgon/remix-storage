@@ -21,7 +21,7 @@ export const plugins = (packageDir) => {
     ts({}), // Generate type definitions files `*.dt.ts`
     esbuild({
       sourceMap: true,
-      target: "ES2020",
+      target: "node16",
       tsconfig: path.join(packageDir, "tsconfig.json")
     }),
     json()
