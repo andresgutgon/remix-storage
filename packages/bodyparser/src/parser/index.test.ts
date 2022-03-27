@@ -551,6 +551,24 @@ describe("Busboy limits", () => {
     })
     expect(readFile("elephant.jpg")).toBeNull()
   })
+
+  describe("override busboy fileSize at parse time", () => {
+    cleanUploadsBeforeAndAfter()
+    test("allow upload of a bigger file", async () => {
+      const response = await server
+        .post(routes.fieldsRoutes.default)
+        .query({
+          schema: schemaKeys.simpleFile,
+          parserConfig: "busboyFileSize",
+          maxServerFileSize: Infinity
+        })
+        .attach("field_one", filePath("elephant.jpg"))
+        .field("field_two", "field_two_content")
+
+      expect(response.body.success).toBeTruthy()
+      expect(response.body.data.field_one.filename).toBe("elephant.jpg")
+    })
+  })
 })
 
 describe.todo("test formErrors")

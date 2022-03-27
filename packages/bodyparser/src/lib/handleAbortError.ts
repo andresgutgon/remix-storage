@@ -27,8 +27,6 @@ export function handleAbortError<T>({
 }: Props<T>): ReturnType<T> {
   const defaultData = { formErrors: [] }
 
-  console.log("Files", files)
-
   if (error instanceof ServerFileSizeError) {
     const serverFileError = error as ServerFileSizeError
     return {

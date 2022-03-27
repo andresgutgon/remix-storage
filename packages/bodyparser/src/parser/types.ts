@@ -58,6 +58,7 @@ export type ParseResult<T> = ResultOK<T> | ResultError<T>
 export interface ParseParams<T> {
   request: Request
   schema: Schema<T>
+  maxServerFileSize?: number
 }
 
 /**

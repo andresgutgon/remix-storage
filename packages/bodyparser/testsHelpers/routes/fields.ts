@@ -1,9 +1,12 @@
 import express from "express"
-import { defaults } from "lodash"
 import path from "path"
 
 import { BodyParser } from "../../src/parser/index"
-import { BodyParserOptions as Options } from "../../src/parser/types"
+import {
+  ParseParams,
+  Schema,
+  BodyParserOptions as Options
+} from "../../src/parser/types"
 
 import { createRemixRequest } from "../createRemixRequest"
 import { getSchema, MAX_SIZE_FILE } from "../schemas"
@@ -43,14 +46,28 @@ function getParser(request: express.Request): BodyParser {
   return new BodyParser(config)
 }
 
-fieldsHandler.post(fieldsRoutes.default, async (req, response) => {
+function getParseParams<T>(req: express.Request): ParseParams<T> {
   const request = createRemixRequest(req)
-  const parser = getParser(req)
   const schema = getSchema(req)
-  const result = await parser.parse({
+  const query = req.query
+  const params = {
     request: request as unknown as Request,
-    schema
-  })
+    schema: schema as unknown as Schema<T>
+  }
+  const maxServerFileSize = query.maxServerFileSize
+
+  if (!maxServerFileSize) return params
+
+  return {
+    ...params,
+    maxServerFileSize: Number(maxServerFileSize)
+  }
+}
+
+fieldsHandler.post(fieldsRoutes.default, async (req, response) => {
+  const parser = getParser(req)
+  const params = getParseParams(req)
+  const result = await parser.parse(params)
 
   response.status(200).json(result)
 })

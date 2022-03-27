@@ -91,7 +91,6 @@ export async function processResult<T>({
     : { formErrors: [], fieldErrors: {} }
 
   const dataKeys = Object.entries(allData)
-  console.log("Data keys", dataKeys)
 
   const data = dataKeys.reduce<ParsedData<T>>((memo, [key]) => {
     const safeKey = key as keyof T

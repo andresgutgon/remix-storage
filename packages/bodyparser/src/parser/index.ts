@@ -17,6 +17,7 @@ import type {
   ParseResult,
   ParseParams
 } from "./types"
+import { server } from "../../testsHelpers/server"
 
 // We want to enqueu one by one the file and fields to be processed.
 // If one of them fails we stop processing the rest
@@ -31,16 +32,21 @@ export class BodyParser {
     this.busboyConfig = busboyConfig || DEFAULT_BUSBOY_CONFIG
   }
 
-  async parse<T>({ request, schema }: ParseParams<T>): Promise<ParseResult<T>> {
+  async parse<T>({
+    request,
+    schema,
+    maxServerFileSize
+  }: ParseParams<T>): Promise<ParseResult<T>> {
     const stream = buildStream(request.body as unknown as Body)
     // Prevent already piped data in busboy's internal buffer from firing more events
     // We need to prevent the previously piped data from causing any more 'field' or 'file'
     // event handlers to be fired
     // More info: https://bytearcher.com/articles/terminate-busboy/
     const queue = new PQueue({ concurrency: PROCESS_CONCURRENCY })
-    const busboy = buildBusboy({
+    const { busboy, serverMaxSize } = buildBusboy({
       headers: { contentType: request.headers.get("Content-Type") },
-      config: this.busboyConfig
+      config: this.busboyConfig,
+      maxServerFileSize
     })
     return new Promise<ParseResult<T>>((resolve) => {
       let result: ParseResult<T>
@@ -103,7 +109,7 @@ export class BodyParser {
             try {
               const file = await parseFile({
                 maxSize,
-                serverMaxSize: this.busboyConfig.limits?.fileSize,
+                serverMaxSize,
                 directory: this.directory,
                 name,
                 filestream,
@@ -134,7 +140,7 @@ export class BodyParser {
         })
       })
 
-      // Start the parsing
+      // Start parsing
       stream.pipe(busboy)
     })
   }

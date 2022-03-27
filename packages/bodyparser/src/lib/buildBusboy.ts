@@ -16,21 +16,33 @@ type Props = {
     contentType: string | null | undefined
   }
   config: BusboyConfig
+  maxServerFileSize: undefined | number
+}
+type ReturnType = {
+  busboy: Busboy.Busboy
+  serverMaxSize: number
 }
 export function buildBusboy({
   headers: { contentType },
-  config
-}: Props): Busboy.Busboy {
+  config,
+  maxServerFileSize
+}: Props): ReturnType {
   invariant(contentType, "MIME type not provided in request")
-  return Busboy({
-    defParamCharset: "utf8",
-    highWaterMark: config.highWaterMark,
-    limits: {
-      ...config.limits,
-      fileSize: config.limits?.fileSize || DEFAULT_BUSBOY_CONFIG.limits.fileSize
-    },
-    headers: {
-      "content-type": contentType
-    }
-  })
+
+  const serverMaxSize =
+    maxServerFileSize || config.limits?.fileSize || MAX_FILE_SIZE
+  return {
+    serverMaxSize,
+    busboy: Busboy({
+      defParamCharset: "utf8",
+      highWaterMark: config.highWaterMark,
+      limits: {
+        ...(config.limits || {}),
+        fileSize: serverMaxSize
+      },
+      headers: {
+        "content-type": contentType
+      }
+    })
+  }
 }
