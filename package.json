@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "release": "changeset publish",
     "preinstall": "npx only-allow pnpm",
     "clean": "nx run-many --target=clean --all --skip-nx-cache && nx reset",
     "lint": "nx run-many --target=lint --all --skip-nx-cache",
