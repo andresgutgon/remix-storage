@@ -10,30 +10,41 @@ type ArrayValue = string[] | number[] | FileShape[]
 export type Value = SingleValue | ArrayValue
 export type ParsedData<T> = { [Key in keyof T]?: Value }
 
-export type Schema<
+type SchemaOutput<
   T,
   TK extends { [K in keyof T]: z.ZodType<T[K]> } = {
     [K in keyof T]: z.ZodType<T[K]>
   }
-> = z.ZodObject<
-  TK,
-  "strip",
-  z.ZodTypeAny,
-  {
-    [k_1 in keyof z.objectUtil.addQuestionMarks<{
-      [k in keyof TK]: TK[k]["_output"]
-    }>]: z.objectUtil.addQuestionMarks<{
-      [k in keyof TK]: TK[k]["_output"]
-    }>[k_1]
-  },
-  {
-    [k_3 in keyof z.objectUtil.addQuestionMarks<{
-      [k_2 in keyof TK]: TK[k_2]["_input"]
-    }>]: z.objectUtil.addQuestionMarks<{
-      [k_2 in keyof TK]: TK[k_2]["_input"]
-    }>[k_3]
+> = {
+  [k_1 in keyof z.objectUtil.addQuestionMarks<{
+    [k in keyof TK]: TK[k]["_output"]
+  }>]: z.objectUtil.addQuestionMarks<{
+    [k in keyof TK]: TK[k]["_output"]
+  }>[k_1]
+}
+
+type SchemaInput<
+  T,
+  TK extends { [K in keyof T]: z.ZodType<T[K]> } = {
+    [K in keyof T]: z.ZodType<T[K]>
   }
->
+> = {
+  [k_3 in keyof z.objectUtil.addQuestionMarks<{
+    [k_2 in keyof TK]: TK[k_2]["_input"]
+  }>]: z.objectUtil.addQuestionMarks<{
+    [k_2 in keyof TK]: TK[k_2]["_input"]
+  }>[k_3]
+}
+
+export type ObjectSchema<
+  T,
+  TK extends { [K in keyof T]: z.ZodType<T[K]> } = {
+    [K in keyof T]: z.ZodType<T[K]>
+  }
+> = z.ZodObject<TK, "strip", z.ZodTypeAny, SchemaOutput<T>, SchemaInput<T>>
+
+export type EffectSchema<T> = z.ZodEffects<ObjectSchema<T>>
+export type Schema<T> = ObjectSchema<T> | EffectSchema<T>
 
 export type FlattenedErrors = {
   formErrors: string[]

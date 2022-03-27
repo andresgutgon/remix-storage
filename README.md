@@ -26,7 +26,9 @@
 - [x] Fix: "No matching export in "node-modules-polyfills:fs" for import "createWriteStream" in Remix example dev server output
 - [x] Check why type of `FileShape` is not returning it as an instance. It's a
       pitty because it's not possible to do `file.size` and the rest.
-- [] Handle `busboy` limits errors
+- [x] Handle `busboy` limits errors
+- [ ] Improve internal Zod file. Looks zod maintainer only wants to support
+      browser file validation. So we need a custom ZodFile implementation.
 
 ## Next TODO
 

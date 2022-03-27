@@ -6,7 +6,7 @@ import {
   BusboyConfig,
   DEFAULT_BUSBOY_CONFIG
 } from "../lib/buildBusboy"
-import { processValue, processResult } from "../lib/processResult"
+import { processValue, getShape, processResult } from "../lib/processResult"
 import { parseFile } from "../lib/parseFile"
 import { FileShape } from "../lib/fileShape"
 import { AbortError, handleAbortError } from "../lib/handleAbortError"
@@ -17,7 +17,6 @@ import type {
   ParseResult,
   ParseParams
 } from "./types"
-import { server } from "../../testsHelpers/server"
 
 // We want to enqueu one by one the file and fields to be processed.
 // If one of them fails we stop processing the rest
@@ -102,7 +101,7 @@ export class BodyParser {
           enqueuFn(async () => {
             // Server fileSize limit configured by Busboy
             const safeName = name as keyof T
-            const validator = schema.shape[safeName]
+            const validator = getShape(schema)[safeName]
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             const maxSize = validator?.maxSize

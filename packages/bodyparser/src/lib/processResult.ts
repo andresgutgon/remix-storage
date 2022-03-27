@@ -1,12 +1,13 @@
 import fs from "fs-extra"
 
 import { FileShape } from "../lib/fileShape"
-import { customErrorMap as errorMap } from "../zod-addons/internal/ZodError"
 import {
   Schema,
   FlattenedErrors,
   ParsedData,
-  ParseResult
+  ParseResult,
+  ObjectSchema,
+  EffectSchema
 } from "../parser/types"
 
 function valueIsFile(value: unknown): boolean {
@@ -50,6 +51,18 @@ export function processValue<Thing>(
   return newValue
 }
 
+/**
+ * By default `shape` is in `schema.shape` when the
+ * schema passed is of type `z.object({})`. But when you refine
+ * the result like this `z.object({}).refined(...)` is and ZodEffect. In this case the shape is inside `schema._def`
+ */
+export function getShape<T>(schema: Schema<T>) {
+  const objectSchema = schema as ObjectSchema<T>
+  const effectsSchema = schema as EffectSchema<T>
+
+  return objectSchema.shape || effectsSchema._def.schema.shape
+}
+
 type Props<T> = {
   schema: Schema<T>
   fields: ParsedData<T>
@@ -64,9 +77,7 @@ export async function processResult<T>({
 }: Props<T>): Promise<ParseResult<T>> {
   const allData = { ...fields, ...files }
 
-  const result = await schema.safeParseAsync(allData, {
-    errorMap
-  })
+  const result = await schema.safeParseAsync(allData, {})
 
   if (result.success && !formErrors.length) {
     // All good
@@ -76,7 +87,8 @@ export async function processResult<T>({
     }
   }
 
-  const schemaKeys = Object.entries(schema.shape)
+  const shape = getShape(schema)
+  const schemaKeys = Object.entries(shape)
   const nullData = schemaKeys.reduce((acc, [key]) => {
     acc[key] = null
     return acc

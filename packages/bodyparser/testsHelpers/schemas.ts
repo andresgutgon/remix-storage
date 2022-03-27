@@ -15,6 +15,14 @@ const defaultSchema = z.object({
 })
 export const schemas = {
   default: defaultSchema,
+  passwordConfirmation: z
+    .object({
+      password: z.string().min(8),
+      confirm: z.string().min(8)
+    })
+    .refine((data) => data.password === data.confirm, {
+      message: "Passwords don't match"
+    }),
   fieldAsArray: defaultSchema.extend({
     field_one: z.array(z.string())
   }),
