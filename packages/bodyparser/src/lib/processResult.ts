@@ -2,7 +2,12 @@ import fs from "fs-extra"
 
 import { FileShape } from "../lib/fileShape"
 import { customErrorMap as errorMap } from "../zod-addons/internal/ZodError"
-import { Schema, ParsedData, ParseResult } from "../parser/types"
+import {
+  Schema,
+  FlattenedErrors,
+  ParsedData,
+  ParseResult
+} from "../parser/types"
 
 function valueIsFile(value: unknown): boolean {
   if (!value) return false
@@ -46,14 +51,16 @@ export function processValue<Thing>(
 }
 
 type Props<T> = {
+  schema: Schema<T>
   fields: ParsedData<T>
   files: ParsedData<T>
-  schema: Schema<T>
+  formErrors: string[]
 }
 export async function processResult<T>({
+  schema,
   fields,
   files,
-  schema
+  formErrors
 }: Props<T>): Promise<ParseResult<T>> {
   const allData = { ...fields, ...files }
 
@@ -61,51 +68,57 @@ export async function processResult<T>({
     errorMap
   })
 
-  if (!result.success) {
-    const keys = Object.entries(schema.shape)
-    const nullData = keys.reduce((acc, [key]) => {
-      acc[key] = null
-      return acc
-    }, {} as { [key: string]: null })
-    const emptyFieldErrors = keys.reduce((acc, [key]) => {
-      acc[key] = []
-      return acc
-    }, {} as { [key: string]: [] })
-    const errors = result.error.flatten()
-    const dataKeys = Object.entries(allData)
-    const data = dataKeys.reduce<ParsedData<T>>((memo, [key]) => {
-      const safeKey = key as keyof T
-      const value = allData[safeKey]
-      const isFile = valueIsFile(value)
-
-      if (!errors.fieldErrors[key]) {
-        memo[safeKey] = isFile ? null : value
-      } else {
-        memo[safeKey] = null
-      }
-
-      removeFiles(value, isFile)
-
-      return memo
-    }, {})
-
+  if (result.success && !formErrors.length) {
+    // All good
     return {
-      success: false,
-      data: {
-        ...nullData,
-        ...data
-      },
-      fieldErrors: {
-        ...emptyFieldErrors,
-        ...errors.fieldErrors
-      },
-      formErrors: errors.formErrors
+      success: result.success,
+      data: result.data
     }
   }
 
-  // ResultOK
+  const schemaKeys = Object.entries(schema.shape)
+  const nullData = schemaKeys.reduce((acc, [key]) => {
+    acc[key] = null
+    return acc
+  }, {} as { [key: string]: null })
+  const emptyFieldErrors = schemaKeys.reduce((acc, [key]) => {
+    acc[key] = []
+    return acc
+  }, {} as { [key: string]: [] })
+
+  const errors: FlattenedErrors = !result.success
+    ? result.error.flatten()
+    : { formErrors: [], fieldErrors: {} }
+
+  const dataKeys = Object.entries(allData)
+  console.log("Data keys", dataKeys)
+
+  const data = dataKeys.reduce<ParsedData<T>>((memo, [key]) => {
+    const safeKey = key as keyof T
+    const value = allData[safeKey]
+    const isFile = valueIsFile(value)
+
+    if (!errors?.fieldErrors[key]) {
+      memo[safeKey] = isFile ? null : value
+    } else {
+      memo[safeKey] = null
+    }
+
+    removeFiles(value, isFile)
+
+    return memo
+  }, {})
+
   return {
-    success: result.success,
-    data: result.data
+    success: false,
+    data: {
+      ...nullData,
+      ...data
+    },
+    fieldErrors: {
+      ...emptyFieldErrors,
+      ...(errors?.fieldErrors || {})
+    },
+    formErrors: [...formErrors, ...(errors?.formErrors || [])]
   }
 }

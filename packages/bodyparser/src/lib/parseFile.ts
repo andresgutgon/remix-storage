@@ -7,33 +7,11 @@ import { dirname } from "path"
 import { makeFile } from "./files/makeFile"
 import { Meter, MeterError } from "./files/meter"
 import { FileShape } from "../lib/fileShape"
+import { ServerFileSizeError } from "../lib/handleAbortError"
 
-class UnknownFileError extends Error {
+export class UnknownFileError extends Error {
   constructor(public field: string) {
     super()
-  }
-}
-enum FileErrorType {
-  size = "size",
-  mimeType = "mimeType"
-}
-type FileErrorParams = {
-  field: string
-  errorType: FileErrorType
-  size?: number
-  mimeType?: string
-}
-export class FileError extends Error {
-  public field: string
-  public errorType: FileErrorType
-  public size?: number | undefined
-  public mimeType?: string | undefined
-  constructor({ field, errorType, size, mimeType }: FileErrorParams) {
-    super()
-    this.field = field
-    this.errorType = errorType
-    this.size = size
-    this.mimeType = mimeType
   }
 }
 
@@ -46,6 +24,7 @@ export type FileResult = {
 
 export type Props = {
   maxSize: number | null | undefined
+  serverMaxSize: number | undefined
   directory: string
   name: string
   filestream: Readable
@@ -55,6 +34,7 @@ export type Props = {
 }
 export async function parseFile({
   maxSize,
+  serverMaxSize,
   directory,
   name,
   filestream,
@@ -64,6 +44,7 @@ export async function parseFile({
   const { filepath, fileName } = await makeFile(directory, filename, mimeType)
   const file = new FileShape(name, mimeType, 0)
   file.name = fileName
+  file.filepath = filepath
 
   // Make the dir
   await mkdir(dirname(filepath), { recursive: true }).catch(() => null)
@@ -93,6 +74,11 @@ export async function parseFile({
       writeFileStream.on("error", abort)
       writeFileStream.on("finish", resolve)
 
+      filestream.on("limit", async () => {
+        await rm(filepath, { force: true }).catch(() => null)
+        reject(new ServerFileSizeError(name, serverMaxSize as number))
+      })
+
       filestream.pipe(meter).pipe(writeFileStream)
     })
   } catch (error: unknown) {
@@ -101,11 +87,14 @@ export async function parseFile({
       throw file
     }
 
+    if (error instanceof ServerFileSizeError) {
+      throw new ServerFileSizeError(name, serverMaxSize as number)
+    }
+
     // Better error Handling
     throw new UnknownFileError(name)
   }
 
-  file.filepath = filepath
   file.setSize(meter.bytes)
 
   return file

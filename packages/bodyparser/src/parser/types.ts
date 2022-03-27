@@ -35,6 +35,13 @@ export type Schema<
   }
 >
 
+export type FlattenedErrors = {
+  formErrors: string[]
+  fieldErrors: {
+    [k: string]: string[]
+  }
+}
+
 export type ResultOK<T> = {
   success: true
   data: Schema<T>["_output"]

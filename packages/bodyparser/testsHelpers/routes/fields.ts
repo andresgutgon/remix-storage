@@ -1,11 +1,13 @@
 import express from "express"
+import { defaults } from "lodash"
 import path from "path"
 
 import { BodyParser } from "../../src/parser/index"
 import { BodyParserOptions as Options } from "../../src/parser/types"
 
 import { createRemixRequest } from "../createRemixRequest"
-import { getSchema } from "../schemas"
+import { getSchema, MAX_SIZE_FILE } from "../schemas"
+import { defaultBodyConfig } from "../utils"
 
 export const fieldsHandler = express.Router()
 export enum fieldsRoutes {
@@ -25,6 +27,14 @@ function getParser(request: express.Request): BodyParser {
     case "none":
       config = {}
       break
+    case "busboyFileSize":
+      config = {
+        ...defaultBodyConfig,
+        busboyConfig: {
+          limits: { fileSize: MAX_SIZE_FILE }
+        }
+      }
+      break
     default:
       config = {}
       break
@@ -36,7 +46,6 @@ function getParser(request: express.Request): BodyParser {
 fieldsHandler.post(fieldsRoutes.default, async (req, response) => {
   const request = createRemixRequest(req)
   const parser = getParser(req)
-
   const schema = getSchema(req)
   const result = await parser.parse({
     request: request as unknown as Request,

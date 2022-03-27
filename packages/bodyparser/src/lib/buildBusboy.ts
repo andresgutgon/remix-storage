@@ -1,12 +1,16 @@
 import invariant from "tiny-invariant"
 import Busboy from "busboy"
 
-const DEFAULT_HIGH_WATER_MARK = 2 * 1024 * 1024
+const DEFAULT_HIGH_WATER_MARK_SIZE = 2 * 1024 * 1024
+const MAX_FILE_SIZE = 1e7 // 10MB in bytes
 
 export const DEFAULT_BUSBOY_CONFIG = {
-  highWaterMark: DEFAULT_HIGH_WATER_MARK
+  highWaterMark: DEFAULT_HIGH_WATER_MARK_SIZE,
+  limits: {
+    fileSize: MAX_FILE_SIZE
+  }
 }
-export type BusboyConfig = Pick<Busboy.BusboyConfig, "highWaterMark">
+export type BusboyConfig = Pick<Busboy.BusboyConfig, "highWaterMark" | "limits">
 type Props = {
   headers: {
     contentType: string | null | undefined
@@ -21,6 +25,10 @@ export function buildBusboy({
   return Busboy({
     defParamCharset: "utf8",
     highWaterMark: config.highWaterMark,
+    limits: {
+      ...config.limits,
+      fileSize: config.limits?.fileSize || DEFAULT_BUSBOY_CONFIG.limits.fileSize
+    },
     headers: {
       "content-type": contentType
     }

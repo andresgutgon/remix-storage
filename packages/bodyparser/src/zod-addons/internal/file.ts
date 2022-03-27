@@ -87,7 +87,7 @@ export interface ZodFileDef extends ZodTypeDef {
   checks: ZodFileCheck[]
 }
 
-interface IFile {
+export interface IFile {
   get lastModified(): number
   get lastModifiedDate(): Date
   get name(): string

@@ -3,20 +3,14 @@ import { Form, json } from "remix"
 import { parser, schema } from "../lib/parser.server"
 
 export const action: ActionFunction = async ({ request }) => {
-  // A body parser that works with Zod
-  // 1. Validates request fields
-  // 2. Upload files
-  // 3. Remove files if validation fails
-  // 4. Return value is typed
   const result = await parser.parse({ request, schema })
 
   if (result.success) {
-    console.log("DATA", result.data.avatar.type)
+    console.log("DATA", result.data.avatar.)
   } else {
-    console.log("ERROR", result.data)
+    console.log("ERROR", result.fieldErrors)
   }
 
-  // FIXME: ShapeFile attributes are not recognized
   return json({ result })
 }
 

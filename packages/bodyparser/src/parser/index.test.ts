@@ -532,4 +532,25 @@ describe("Array of values in a field[]", () => {
   })
 })
 
-describe.todo("Allow override Busboy field/file size limits")
+describe("Busboy limits", () => {
+  test("display busboy fileSize limit error", async () => {
+    const response = await server
+      .post(routes.fieldsRoutes.default)
+      .query({
+        schema: schemaKeys.simpleFile,
+        parserConfig: "busboyFileSize"
+      })
+      .attach("field_one", filePath("elephant.jpg"))
+      .field("field_two", "field_two_content")
+
+    expect(response.body).toEqual({
+      success: false,
+      data: { field_one: null, field_two: null },
+      fieldErrors: { field_one: ["Required"], field_two: ["Required"] },
+      formErrors: [`Uploaded file exceeds max size limit of ${MAX_SIZE_FILE}`]
+    })
+    expect(readFile("elephant.jpg")).toBeNull()
+  })
+})
+
+describe.todo("test formErrors")

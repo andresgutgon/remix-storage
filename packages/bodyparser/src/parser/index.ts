@@ -9,6 +9,7 @@ import {
 import { processValue, processResult } from "../lib/processResult"
 import { parseFile } from "../lib/parseFile"
 import { FileShape } from "../lib/fileShape"
+import { AbortError, handleAbortError } from "../lib/handleAbortError"
 
 import type {
   BodyParserOptions,
@@ -47,22 +48,20 @@ export class BodyParser {
       const files: ParsedData<T> = {}
       const fields: ParsedData<T> = {}
 
-      async function abort(error: Error | FileShape) {
+      async function abort(error: AbortError) {
         if (aborted) return
         aborted = true
 
-        // FIXME: This has to be extracted
-        // Here we're throwing a FileShape when the size of
-        // the file is bigger than validation
-        // This will be re-done when implementing @remix-storage/drive
-        // Here is where we plug Disk, S3, Digital Ocean, GCC,...
-        const fileError = error as FileShape
-        const fileName = fileError.fieldName as keyof T
-        files[fileName] = fileError
-
-        result = await processResult({
+        const abortError = handleAbortError({
           fields,
           files,
+          error
+        })
+
+        result = await processResult({
+          fields: abortError.fields,
+          files: abortError.files,
+          formErrors: abortError.formErrors,
           schema
         })
         resolve(result)
@@ -95,6 +94,7 @@ export class BodyParser {
         "file",
         (name, filestream, { filename, encoding, mimeType }) => {
           enqueuFn(async () => {
+            // Server fileSize limit configured by Busboy
             const safeName = name as keyof T
             const validator = schema.shape[safeName]
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -103,6 +103,7 @@ export class BodyParser {
             try {
               const file = await parseFile({
                 maxSize,
+                serverMaxSize: this.busboyConfig.limits?.fileSize,
                 directory: this.directory,
                 name,
                 filestream,
@@ -124,9 +125,10 @@ export class BodyParser {
       busboy.on("close", async () => {
         enqueuFn(async () => {
           result = await processResult({
+            schema,
             fields,
             files,
-            schema
+            formErrors: []
           })
           resolve(result)
         })
