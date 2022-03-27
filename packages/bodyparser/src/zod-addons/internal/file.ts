@@ -233,11 +233,18 @@ export class ZodFile extends ZodType<IFile, ZodFileDef> {
     })
   }
 
-  type(accept: string | string[], message?: errorUtil.ErrMessage) {
-    return this._addCheck({
-      kind: "type",
-      value: accept,
-      ...errorUtil.errToObj(message)
+  types(accept: string[], message?: errorUtil.ErrMessage) {
+    return new ZodFile({
+      ...this._def,
+      // filter out pre-existing `type` checks
+      checks: [
+        ...this._def.checks.filter((ch) => ch.kind !== "type"),
+        {
+          kind: "type",
+          value: accept,
+          ...errorUtil.errToObj(message)
+        }
+      ]
     })
   }
 

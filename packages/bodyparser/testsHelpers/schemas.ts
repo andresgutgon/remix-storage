@@ -53,10 +53,10 @@ export const schemas = {
     field_one: file().optional()
   }),
   mimeTypeValidation: defaultSchema.extend({
-    field_one: file().type(["image/png", "application/pdf"])
+    field_one: file().types(["image/png", "application/pdf"])
   }),
   mimeTypeCustomValidation: defaultSchema.extend({
-    field_one: file({ errorMap }).type(["image/png", "application/pdf"])
+    field_one: file({ errorMap }).types(["image/png", "application/pdf"])
   }),
   maxSizeValidation: defaultSchema.extend({
     field_one: file().max(MAX_SIZE_FILE)
