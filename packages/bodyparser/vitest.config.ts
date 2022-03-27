@@ -1,3 +1,5 @@
 import baseConfig from "../../vitest.config"
 
-export default { ...baseConfig }
+export default {
+  ...baseConfig
+}

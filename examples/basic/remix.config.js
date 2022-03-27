@@ -7,5 +7,6 @@ module.exports = {
   publicPath: "/build/",
   serverBuildDirectory: "build",
   devServerPort: 8002,
-  watchGlobs: ["../../packages/**/src/**/*.ts"]
+  watchGlobs: ["../../packages/**/src/**/*.ts"],
+  serverDependenciesToBundle: [/^p-queue.*/, /^p-timeout.*/]
 }
