@@ -1,6 +1,6 @@
 {
   "name": "@remix-storage/bodyparser",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "description": "Parse request body on Remix apps allowing a Zod schema for validations. Handling also files fields",
   "keywords": ["files-uploads", "zod", "remix", "web"],
