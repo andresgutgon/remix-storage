@@ -2,7 +2,6 @@
   "version": 2,
   "projects": {
     "basic": "examples/basic",
-    "bodyparser": "packages/bodyparser",
-    "zodLol": "packages/zod"
+    "bodyparser": "packages/bodyparser"
   }
 }
