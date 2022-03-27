@@ -446,7 +446,7 @@ describe("Hanlde file field with a list of files", () => {
   })
 })
 
-describe.only("Handle a list of files with errors", () => {
+describe("Handle a list of files with errors", () => {
   test("display validation error", async () => {
     const response = await server
       .post(routes.fieldsRoutes.default)
@@ -546,7 +546,7 @@ describe("Busboy limits", () => {
     expect(response.body).toEqual({
       success: false,
       data: { field_one: null, field_two: null },
-      fieldErrors: { field_one: [""], field_two: ["Required"] },
+      fieldErrors: { field_one: ["Required"], field_two: ["Required"] },
       formErrors: [`Uploaded file exceeds max size limit of ${MAX_SIZE_FILE}`]
     })
     expect(readFile("elephant.jpg")).toBeNull()

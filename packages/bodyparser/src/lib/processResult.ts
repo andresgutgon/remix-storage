@@ -1,6 +1,7 @@
 import fs from "fs-extra"
 
 import { FileShape } from "../lib/fileShape"
+import { customErrorMap as errorMap } from "../zod-addons/internal/ZodError"
 import {
   Schema,
   FlattenedErrors,
@@ -77,7 +78,7 @@ export async function processResult<T>({
 }: Props<T>): Promise<ParseResult<T>> {
   const allData = { ...fields, ...files }
 
-  const result = await schema.safeParseAsync(allData, {})
+  const result = await schema.safeParseAsync(allData, { errorMap })
 
   if (result.success && !formErrors.length) {
     // All good

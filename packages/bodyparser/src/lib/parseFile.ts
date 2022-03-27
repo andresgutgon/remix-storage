@@ -73,7 +73,6 @@ export async function parseFile({
       meter.on("error", abort)
       writeFileStream.on("error", abort)
       writeFileStream.on("finish", resolve)
-
       filestream.on("limit", async () => {
         await rm(filepath, { force: true }).catch(() => null)
         reject(new ServerFileSizeError(name, serverMaxSize as number))
